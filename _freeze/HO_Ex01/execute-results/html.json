@@ -1,0 +1,15 @@
+{
+  "hash": "77a8b702f80e4d3cf9bdb7387b20c2da",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Hands-on Exercise 1\"\nauthor: \"Albert Chia\"\ndate: \"April 10, 2026\"\ndate-modified: \"last-modified\"\nexecute:\n  eval: true\n  echo: true\n  warning: false\n  freeze: true\n---\n\n\n::: {.cell}\n\n```{.r .cell-code}\npacman::p_load(tidyverse)\n```\n:::\n\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
