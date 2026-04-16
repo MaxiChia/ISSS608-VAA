@@ -25,7 +25,7 @@ exam_data <- read.csv('data/Exam_data.csv')
 
 ## **R Graphics VS ggplot**
 
-```{r code-fold=true}
+```{r}
 hist(exam_data$MATHS)
 ```
 
