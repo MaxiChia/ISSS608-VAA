@@ -5,7 +5,7 @@ date: "April 10, 2026"
 date-modified: "last-modified"
 execute:
   eval: true
-  echo: true 
+  echo: true  
   warning: false
   freeze: true
 ---
@@ -26,7 +26,6 @@ exam_data <- read_csv('data/Exam_data.csv')
 ## **R Graphics VS ggplot**
 
 ```{r}
-#| echo: false
 hist(exam_data$MATHS)
 ```
 
