@@ -12,6 +12,8 @@ execute:
 
 ## **Install and Launching R packages**
 
+Before we get started, it is important for us to ensure that the required R packages have been installed. If yes, we will load the R packages. If they have yet to be installed, we will install the R packages and load them onto R environment.
+
 ```{r}
 pacman::p_load(tidyverse)
 
@@ -19,11 +21,17 @@ pacman::p_load(tidyverse)
 
 ## **Importing the Data Set**
 
+-   The code chunk below imports *exam_data.csv* into R environment by using [*read_csv()*](https://readr.tidyverse.org/reference/read_delim.html) function of [**readr**](https://readr.tidyverse.org/) package.
+
+-   **readr** is one of the tidyverse package.
+
 ```{r}
 exam_data <- read_csv('data/Exam_data.csv')
 ```
 
 ## **R Graphics VS ggplot**
+
+First, let us compare how R Graphics, the core graphical functions of Base R and ggplot plot a simple histogram.
 
 ```{r}
 hist(exam_data$MATHS)
