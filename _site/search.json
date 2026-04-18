@@ -39,7 +39,7 @@
     "href": "Hands-on_Exercise/Hands-on_Ex01/Hands-on_Ex01.html#r-graphics-vs-ggplot",
     "title": "Hands-on Exercise 1",
     "section": "R Graphics VS ggplot",
-    "text": "R Graphics VS ggplot\nFirst, let us compare how R Graphics, the core graphical functions of Base R and ggplot plot a simple histogram.\n\nhist(exam_data$MATHS)\n\n\n\n\n\n\n\n\n\nggplot(data=exam_data, aes(x = MATHS)) +\n  geom_histogram(bins=10, \n                 boundary = 100,\n                 color=\"black\", \n                 fill=\"grey\") +\n  ggtitle(\"Distribution of Maths scores\")"
+    "text": "R Graphics VS ggplot\nFirst, let us compare how R Graphics, the core graphical functions of Base R and ggplot plot a simple histogram.\n\nR Graphicsggplot2\n\n\n\nhist(exam_data$MATHS)\n\n\n\n\n\n\n\n\n\n\n\nggplot(data=exam_data, aes(x = MATHS)) +\n  geom_histogram(bins=10, \n                 boundary = 100,\n                 color=\"black\", \n                 fill=\"grey\") +\n  ggtitle(\"Distribution of Maths scores\")"
   },
   {
     "objectID": "Hands-on_Exercise/Hands-on_Ex01/Hands-on_Ex01.html#essential-grammatical-elements-in-ggplot2-data",
