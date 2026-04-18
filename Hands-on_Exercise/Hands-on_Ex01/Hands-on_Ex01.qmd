@@ -69,7 +69,27 @@ ggplot(data=exam_data,
 
 ## **Essential Grammatical Elements in ggplot2: geom**
 
-Geometric Objects: geom_bar The code chunk below plots a bar chart by using geom_bar().
+Geometric objects are the actual marks we put on a plot. Examples include:
+
+-   *geom_point* for drawing individual points (e.g., a scatter plot)
+
+-   *geom_line* for drawing lines (e.g., for a line charts)
+
+-   *geom_smooth* for drawing smoothed lines (e.g., for simple trends or approximations)
+
+-   *geom_bar* for drawing bars (e.g., for bar charts)
+
+-   *geom_histogram* for drawing binned values (e.g. a histogram)
+
+-   *geom_polygon* for drawing arbitrary shapes
+
+-   *geom_map* for drawing polygons in the shape of a map! (You can access the data to use for these maps by using the map_data() function).
+
+A plot must have at least one geom; there is no upper limit. You can add a geom to a plot using the **+** operator. For complete list, please refer to [here](https://ggplot2.tidyverse.org/reference/#section-layer-geoms).
+
+## **Geometric Objects: geom_bar** 
+
+The code chunk below plots a bar chart by using geom_bar().
 
 ```{r}
 ggplot(data=exam_data, 
