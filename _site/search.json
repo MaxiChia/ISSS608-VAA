@@ -60,7 +60,14 @@
     "href": "Hands-on_Exercise/Hands-on_Ex01/Hands-on_Ex01.html#essential-grammatical-elements-in-ggplot2-geom",
     "title": "Hands-on Exercise 1",
     "section": "Essential Grammatical Elements in ggplot2: geom",
-    "text": "Essential Grammatical Elements in ggplot2: geom\nGeometric Objects: geom_bar The code chunk below plots a bar chart by using geom_bar().\n\nggplot(data=exam_data, \n       aes(x=RACE)) +\n  geom_bar()"
+    "text": "Essential Grammatical Elements in ggplot2: geom\nGeometric objects are the actual marks we put on a plot. Examples include:\n\ngeom_point for drawing individual points (e.g., a scatter plot)\ngeom_line for drawing lines (e.g., for a line charts)\ngeom_smooth for drawing smoothed lines (e.g., for simple trends or approximations)\ngeom_bar for drawing bars (e.g., for bar charts)\ngeom_histogram for drawing binned values (e.g. a histogram)\ngeom_polygon for drawing arbitrary shapes\ngeom_map for drawing polygons in the shape of a map! (You can access the data to use for these maps by using the map_data() function).\n\nA plot must have at least one geom; there is no upper limit. You can add a geom to a plot using the + operator. For complete list, please refer to here."
+  },
+  {
+    "objectID": "Hands-on_Exercise/Hands-on_Ex01/Hands-on_Ex01.html#geometric-objects-geom_bar",
+    "href": "Hands-on_Exercise/Hands-on_Ex01/Hands-on_Ex01.html#geometric-objects-geom_bar",
+    "title": "Hands-on Exercise 1",
+    "section": "Geometric Objects: geom_bar",
+    "text": "Geometric Objects: geom_bar\nThe code chunk below plots a bar chart by using geom_bar().\n\nggplot(data=exam_data, \n       aes(x=RACE)) +\n  geom_bar()"
   },
   {
     "objectID": "Hands-on_Exercise/Hands-on_Ex01/Hands-on_Ex01.html#geometric-objects-geom_dotplot",

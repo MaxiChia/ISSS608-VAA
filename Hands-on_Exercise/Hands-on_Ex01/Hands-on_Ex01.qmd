@@ -87,7 +87,7 @@ Geometric objects are the actual marks we put on a plot. Examples include:
 
 A plot must have at least one geom; there is no upper limit. You can add a geom to a plot using the **+** operator. For complete list, please refer to [here](https://ggplot2.tidyverse.org/reference/#section-layer-geoms).
 
-## **Geometric Objects: geom_bar** 
+## **Geometric Objects: geom_bar**
 
 The code chunk below plots a bar chart by using geom_bar().
 
