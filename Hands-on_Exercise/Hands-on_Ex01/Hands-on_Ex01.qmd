@@ -1,14 +1,16 @@
 ---
 title: "Hands-on Exercise 1"
-author: "Albert Chia"
+author: "Chia Song Tuck Albert"
 date: "April 10, 2026"
 date-modified: "last-modified"
 execute:
   eval: true
   echo: true
   warning: false
-  freeze: false
+  freeze: true
 ---
+
+# A Layered Grammar of Graphics: ggplot2 methods
 
 ## **Install and Launching R packages**
 

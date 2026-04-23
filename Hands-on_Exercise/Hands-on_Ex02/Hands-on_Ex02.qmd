@@ -1,0 +1,512 @@
+---
+title: "Hands-on Exercise 2"
+author: "Chia Song Tuck Albert"
+date: "April 10, 2026"
+date-modified: "last-modified"
+execute:
+  eval: true
+  echo: true
+  warning: false
+  freeze: false
+---
+
+# Beyond ggplot2 Fundamentals
+
+## Installing and loading the required libraries
+
+In this exercise, besides tidyverse, which i used for Hands-on_Ex01, there are four more packages that we need. They are:
+
+-   ggrepel: repel overlapping text labels.
+
+-   ggthemes: provides some extra themes, geoms, and scales for ‘ggplot2’.
+
+-   hrbrthemes: provides typography-centric themes and theme components for ggplot2.
+
+-   patchwork: preparing composite figure created using ggplot2.
+
+```{r}
+pacman::p_load(ggrepel, patchwork, 
+               ggthemes, hrbrthemes,
+               tidyverse) 
+```
+
+## **Importing data**
+
+This exercise will be using the same data file as Hands-on_Ex01: *Exam_data*. However, i created a separate folder in the Hands-On_Exercise 2 folder.
+
+```{r}
+exam_data <- read_csv("Data/Exam_data.csv")
+```
+
+## Beyond ggplot2 Annotation: ggrepel
+
+::: panel-tabset
+## The Plot
+
+```{r echo=FALSE}
+ggplot(data=exam_data, 
+       aes(x= MATHS, 
+           y=ENGLISH)) +
+  geom_point() +
+  geom_smooth(method=lm, 
+              size=0.5) +  
+  geom_label(aes(label = ID), 
+             hjust = .5, 
+             vjust = -.5) +
+  coord_cartesian(xlim=c(0,100),
+                  ylim=c(0,100)) +
+  ggtitle("English scores versus Maths scores for Primary 3")
+```
+
+## The Code
+
+```{r eval=FALSE}
+ggplot(data=exam_data, 
+       aes(x= MATHS, 
+           y=ENGLISH)) +
+  geom_point() +
+  geom_smooth(method=lm, 
+              size=0.5) +  
+  geom_label(aes(label = ID), 
+             hjust = .5, 
+             vjust = -.5) +
+  coord_cartesian(xlim=c(0,100),
+                  ylim=c(0,100)) +
+  ggtitle("English scores versus Maths scores for Primary 3")
+```
+:::
+
+## Working with ggrepel
+
+The previous plot added label box for every point - many points close together, the labels can overlap badly resulting in charts / plot being very messy and hard to read.
+
+ggrepel helps to push these labels away from each other and makes the plot "cleaner" and easier to read.
+
+::: panel-tabset
+## The Plot
+
+```{r echo=FALSE}
+ggplot(data=exam_data, 
+       aes(x= MATHS, 
+           y=ENGLISH)) +
+  geom_point() +
+  geom_smooth(method=lm, 
+              size=0.5) +  
+  geom_label_repel(aes(label = ID), 
+                   fontface = "bold") +
+  coord_cartesian(xlim=c(0,100),
+                  ylim=c(0,100)) +
+  ggtitle("English scores versus Maths scores for Primary 3")
+```
+
+## The Code
+
+```{r eval=FALSE}
+ggplot(data=exam_data, 
+       aes(x= MATHS, 
+           y=ENGLISH)) +
+  geom_point() +
+  geom_smooth(method=lm, 
+              size=0.5) +  
+  geom_label_repel(aes(label = ID), 
+                   fontface = "bold") +
+  coord_cartesian(xlim=c(0,100),
+                  ylim=c(0,100)) +
+  ggtitle("English scores versus Maths scores for Primary 3")
+```
+:::
+
+## Beyond ggplot2 Themes
+
+ggplot2 comes with eight built-in themes, they are: theme_gray(), theme_bw(), theme_classic(), theme_dark(), theme_light(), theme_linedraw(), theme_minimal(), and theme_void().
+
+Example of theme_dark used:
+
+::: panel-tabset
+## The Plot
+
+```{r echo=FALSE}
+ggplot(data=exam_data, 
+             aes(x = MATHS)) +
+  geom_histogram(bins=20, 
+                 boundary = 100,
+                 color="grey25", 
+                 fill="grey90") +
+  theme_dark() +
+  ggtitle("Distribution of Maths scores") 
+```
+
+## The Code
+
+```{r eval=FALSE}
+ggplot(data=exam_data, 
+             aes(x = MATHS)) +
+  geom_histogram(bins=20, 
+                 boundary = 100,
+                 color="grey25", 
+                 fill="grey90") +
+  theme_dark() +
+  ggtitle("Distribution of Maths scores") 
+```
+:::
+
+## Working with ggtheme Package
+
+In addition to ggplot2 themes, ggthemes replicates the looks of plots by Edward Tufte, Stephen Few, Fivethirtyeight, The Economist, 'stata', 'Excel', and the Wall Street Journal.
+
+An example when The Economist theme is used:
+
+::: panel-tabset
+## The Plot
+
+```{r echo=FALSE}
+ggplot(data=exam_data, 
+             aes(x = MATHS)) +
+  geom_histogram(bins=20, 
+                 boundary = 100,
+                 color="grey25", 
+                 fill="grey90") +
+  ggtitle("Distribution of Maths scores") +
+  theme_economist()
+```
+
+## The Code
+
+```{r eval=FALSE}
+ggplot(data=exam_data, 
+             aes(x = MATHS)) +
+  geom_histogram(bins=20, 
+                 boundary = 100,
+                 color="grey25", 
+                 fill="grey90") +
+  ggtitle("Distribution of Maths scores") +
+  theme_economist()
+```
+:::
+
+## Working with hrbrthems Package
+
+hrbrthems packages provides ready-made themes that improves the visual appearance of the charts. It makes them clearner and modern.
+
+An example of theme_ipsum used:
+
+::: panel-tabset
+## The Plot
+
+```{r echo=FALSE}
+ggplot(data=exam_data, 
+             aes(x = MATHS)) +
+  geom_histogram(bins=20, 
+                 boundary = 100,
+                 color="grey25", 
+                 fill="grey90") +
+  ggtitle("Distribution of Maths scores") +
+  theme_ipsum()
+```
+
+## The Code
+
+```{r eval=FALSE}
+ggplot(data=exam_data, 
+             aes(x = MATHS)) +
+  geom_histogram(bins=20, 
+                 boundary = 100,
+                 color="grey25", 
+                 fill="grey90") +
+  ggtitle("Distribution of Maths scores") +
+  theme_ipsum()
+```
+:::
+
+hrbrthems also allows axis title size change, axis label size change and grid removal.
+
+An example where the above attributes are changed:
+
+::: panel-tabset
+## The Plot
+
+```{r echo=FALSE}
+ggplot(data=exam_data, 
+             aes(x = MATHS)) +
+  geom_histogram(bins=20, 
+                 boundary = 100,
+                 color="grey25", 
+                 fill="grey90") +
+  ggtitle("Distribution of Maths scores") +
+  theme_ipsum(axis_title_size = 18,
+              base_size = 15,
+              grid = "Y")
+```
+
+## The Code
+
+```{r eval=FALSE}
+ggplot(data=exam_data, 
+             aes(x = MATHS)) +
+  geom_histogram(bins=20, 
+                 boundary = 100,
+                 color="grey25", 
+                 fill="grey90") +
+  ggtitle("Distribution of Maths scores") +
+  theme_ipsum(axis_title_size = 18,
+              base_size = 15,
+              grid = "Y")
+```
+:::
+
+## Beyond Single Graph
+
+It is not unusual that multiple graphs are required to tell a compelling visual story. There are several ggplot2 extensions provide functions to compose figure with multiple graphs. In this section, you will learn how to create composite plot by combining multiple graphs.
+
+::: panel-tabset
+## The Maths Scores Plot
+
+```{r echo=FALSE}
+p1 <- ggplot(data=exam_data, 
+             aes(x = MATHS)) +
+  geom_histogram(bins=20, 
+                 boundary = 100,
+                 color="grey25", 
+                 fill="grey90") + 
+  coord_cartesian(xlim=c(0,100)) +
+  ggtitle("Distribution of Maths scores")
+p1
+```
+
+## The Maths Scores Code
+
+```{r eval=FALSE}
+p1 <- ggplot(data=exam_data, 
+             aes(x = MATHS)) +
+  geom_histogram(bins=20, 
+                 boundary = 100,
+                 color="grey25", 
+                 fill="grey90") + 
+  coord_cartesian(xlim=c(0,100)) +
+  ggtitle("Distribution of Maths scores")
+```
+:::
+
+::: callout-note
+## Note
+
+When we assign p1 or p2, we are just assigning the plot, not printing it. In order to print it, we can add "p1" or "p2" to the last line, and run it.
+:::
+
+and
+
+::: panel-tabset
+## The English Scores Plot
+
+```{r echo=FALSE}
+p2 <- ggplot(data=exam_data, 
+             aes(x = ENGLISH)) +
+  geom_histogram(bins=20, 
+                 boundary = 100,
+                 color="grey25", 
+                 fill="grey90") +
+  coord_cartesian(xlim=c(0,100)) +
+  ggtitle("Distribution of English scores")
+p2
+```
+
+## The English Scores Code
+
+```{r eval=FALSE}
+p2 <- ggplot(data=exam_data, 
+             aes(x = ENGLISH)) +
+  geom_histogram(bins=20, 
+                 boundary = 100,
+                 color="grey25", 
+                 fill="grey90") +
+  coord_cartesian(xlim=c(0,100)) +
+  ggtitle("Distribution of English scores")
+```
+:::
+
+Below is the example of a scatterplot for English vs Math score:
+
+::: panel-tabset
+## The Plot
+
+```{r echo=FALSE}
+p3 <- ggplot(data=exam_data, 
+             aes(x= MATHS, 
+                 y=ENGLISH)) +
+  geom_point() +
+  geom_smooth(method=lm, 
+              size=0.5) +  
+  coord_cartesian(xlim=c(0,100),
+                  ylim=c(0,100)) +
+  ggtitle("English scores versus Maths scores for Primary 3")
+p3
+```
+
+## The Code
+
+```{r eval=FALSE}
+p3 <- ggplot(data=exam_data, 
+             aes(x= MATHS, 
+                 y=ENGLISH)) +
+  geom_point() +
+  geom_smooth(method=lm, 
+              size=0.5) +  
+  coord_cartesian(xlim=c(0,100),
+                  ylim=c(0,100)) +
+  ggtitle("English scores versus Maths scores for Primary 3")
+```
+:::
+
+## Creating Composite Graphis: Pathwork methods
+
+There are several ggplot2 extension’s functions support the needs to prepare composite figure by combining several graphs such as grid.arrange() of gridExtra package and plot_grid() of cowplot package. In this section, I am going to shared with you an ggplot2 extension called patchwork which is specially designed for combining separate ggplot2 graphs into a single figure.
+
+Patchwork package has a very simple syntax where we can create layouts super easily. Here’s the general syntax that combines:
+
+Two-Column Layout using the Plus Sign +.
+
+Parenthesis () to create a subplot group.
+
+Two-Row Layout using the Division Sign /
+
+## Combing two ggplot2 Graphs
+
+::: panel-tabset
+## The Plot
+
+```{r echo=FALSE}
+p1 + p2
+```
+
+## The Code
+
+```{r eval=FALSE}
+p1 + p2
+```
+:::
+
+## Combining Three ggplot Graphs
+
+We can plot more complex composite by using appropriate operators. For example, the composite figure below is plotted by using:
+
+“/” operator to stack two ggplot2 graphs,
+
+“\|” operator to place the plots beside each other,
+
+“()” operator the define the sequence of the plotting.
+
+::: panel-tabset
+## The Plot
+
+```{r echo=FALSE}
+(p1 / p2) | p3
+```
+
+## The Code
+
+```{r eval=FALSE}
+(p1 / p2) | p3
+```
+:::
+
+## Creating a Composite Figure with Tag
+
+In order to identify subplots in text, patchwork also provides auto-tagging capabilities as shown in the figure below.
+
+::: panel-tabset
+## The Plot
+
+```{r echo=FALSE}
+((p1 / p2) | p3) + 
+  plot_annotation(tag_levels = 'I')
+```
+
+## The Code
+
+```{r eval=FALSE}
+((p1 / p2) | p3) + 
+  plot_annotation(tag_levels = 'I')
+```
+:::
+
+::: callout-note
+## Note
+
+This essentially adds label 'I', 'II', 'III' to p1, p2, p3 respectively. Remember to group ((p1 / p2) \| p3)!
+:::
+
+## Creating Figure with Insert
+
+Beside providing functions to place plots next to each other based on the provided layout. With inset_element() of patchwork, we can place one or several plots or graphic elements freely on top or below another plot.
+
+::: panel-tabset
+## The Plot
+
+```{r echo=FALSE}
+p3 + inset_element(p2, 
+                   left = 0.02, 
+                   bottom = 0.7, 
+                   right = 0.5, 
+                   top = 1)
+```
+
+## The Code
+
+```{r eval=FALSE}
+p3 + inset_element(p2, 
+                   left = 0.02, 
+                   bottom = 0.7, 
+                   right = 0.5, 
+                   top = 1)
+```
+:::
+
+::: callout-note
+## Note
+
+This insert p2 into p3. Left, bottom, right and top denotes the position of the inserted plot - starting from bottom left. (it also determine how wide and high p2 will be) Left : how far from left side it begins right : how far from left side it ends bottom : how high from bottom it begins top : how high from bottom it ends
+:::
+
+## Creating a Composite Figure by using Patchwork and ggtheme
+
+Figure below is created by combining patchwork and theme_economist() of ggthemes package discussed earlier.
+
+::: panel-tabset
+## The Plot (theme_economist)
+
+```{r echo=FALSE}
+patchwork <- (p1 / p2) | p3
+patchwork & theme_economist()
+```
+
+## The Code (theme_economist)
+
+```{r eval=FALSE}
+patchwork <- (p1 / p2) | p3
+patchwork & theme_economist()
+```
+:::
+
+Figure below is created by combining patchwork and theme_wsj() of ggthemes package discussed earlier.
+
+::: panel-tabset
+## The Plot (theme_wsj)
+
+```{r echo=FALSE}
+patchwork <- (p1 / p2) | p3
+patchwork & theme_wsj()
+```
+
+## The Code (theme_wsj)
+
+```{r eval=FALSE}
+patchwork <- (p1 / p2) | p3
+patchwork & theme_wsj()
+```
+:::
+
+::: callout-note
+## Note
+
+This essentially (1) combine multiple plots, and (2) apply the same theme to all these plots. Really sees the difference in the theme packages. hrbrthemes packages really made the plots visually clearer and neater.
+:::
