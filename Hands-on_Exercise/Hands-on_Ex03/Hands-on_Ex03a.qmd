@@ -28,7 +28,7 @@ pacman::p_load(ggiraph, plotly, patchwork, DT, tidyverse)
 
 ## Importing Data
 
-Similar to the previous Hands-on exercise, this exercise uses the read_csv() of readr package to import Exam_data.csv into R.
+Similar to the previous Hands-on exercise, this exercise uses the *read_csv()* of readr package to import Exam_data.csv into R.
 
 ```{r}
 exam_data <- read_csv("Data/Exam_data.csv")
@@ -48,7 +48,7 @@ If used within a shiny application, elements associated with an id(data_id) can 
 
 ## All about Tooltip
 
-:::: panel-tabset
+::::::: panel-tabset
 ## Tooltip Effect with Tooltip Asethetic
 
 Below shows an interactive statistical plot using the ggiraph package.
@@ -72,14 +72,14 @@ girafe(
 )
 ```
 
-Notice that two steps are involved. First, an interactive version of ggplot2 geom (i.e. geom_dotplot_interactive()) will be used to create the basic graph. Then, girafe() will be used to generate an svg object to be displayed on an html page.
+Notice that two steps are involved. First, an interactive version of ggplot2 geom (i.e. *geom_dotplot_interactive()*) will be used to create the basic graph. Then, *girafe()* will be used to generate an svg object to be displayed on an html page.
 
 ::: callout-note
 ## Note
 
 - "#\| code-fold: true" hide the code chunk, and reveals upon click.
 - aes(tooltip=id) enables the hovering over a dot to show 'id' (This is from ggiraph) stackgroups = TRUE basically just stacks the dots nicely without overlapping.
-- girafe() converts the ggplot into a interactive HTML widget ggobj = p means to use the plot 'p' we assigned in the first line.
+- *girafe()* converts the ggplot into a interactive HTML widget ggobj = p means to use the plot 'p' we assigned in the first line.
 :::
 
 ## Displaying multiple information on tooltip
@@ -118,7 +118,7 @@ girafe(
 
 ## Customising Tooltip style
 
-Below uses opts_tooltip() of ggiraph to customise tooltip rendering by adding css declarations. Notice how the css changed the background colour of the tooltip to black and the font colour to white and bold.
+Below uses *opts_tooltip()* of ggiraph to customise tooltip rendering by adding css declarations. Notice how the css changed the background colour of the tooltip to black and the font colour to white and bold.
 
 ```{r}
 #| code-fold: true
@@ -187,19 +187,19 @@ girafe(ggobj = gg_point,
 - The first line defines a function - one that adds the mean and the standard error (SEM).
 - "paste" just means that the text is added to the chart.
 - "stat_summary" calculates the stats.
-- "after_stats()" uses those calculated values. (y = mean, ymax = mean + SEM)
+- "*after_stats()*" uses those calculated values. (y = mean, ymax = mean + SEM)
 - "fun.data = "mean_se" simply computes the mean and standard error.
 - "geom = GeomInteractiveCol" draws the bars (column) and makes it interactive (meaning the hovering works).
 - Everything in the code did 3 key things: (1) Compute summary stats, (2) Plots them, and (3) Add smart tooltip.
 :::
-::::
+:::::::
 
 ## Hover
 
-:::: panel-tabset
+:::::::: panel-tabset
 ## Hover Effect with data_id Aesthetic
 
-This is the 2nd interactive feature of ggiraph, namely data_id. Elements associated with a data_id (i.e.CLASS) will be highlighted upon mouse over.
+This is the 2nd interactive feature of ggiraph, namely data_id. Elements associated with a data_id (i.e. CLASS) will be highlighted upon mouse over.
 
 ```{r}
 #| code-fold: true
@@ -381,14 +381,15 @@ girafe(code = print(p1 + p2),
 ::: callout-note
 ## Note
 :::
+
 - Basically, this enable us to generate a linked interactive visualisation - having 2 plots that "talks" to each other using data_id.
 
 - Above shows the maths stats with english stats side-by-side.
 
 - P1 and P2 are linked by the unique ID via "data_is = ID".
 
-- "girafe(code = print(p1+p2))" tell R to put plots side-by-side, and makes them interactive together.
-::::
+- "*girafe(code = print(p1+p2))*" tell R to put plots side-by-side, and makes them interactive together.
+::::::::
 
 ## Interactive Data Visualisation - plotly methods!
 
@@ -396,32 +397,36 @@ Plotly’s R graphing library create interactive web graphics from ggplot2 graph
 
 There are two ways to create interactive graph by using plotly, they are:
 
-- by using plot_ly(), and
-- by using ggplotly()
+- by using *plot_ly()*, and
+- by using *ggplotly()*
 
-## Creating an Interactive Scatter Plot: plot_ly method
-The tabset below shows an example a basic interactive plot created by using plot_ly(). 
+## Creating an Interactive Scatter Plot: *plot_ly* method
 
-:::: panel-tabset 
+The tabset below shows an example a basic interactive plot created by using *plot_ly()*.
+
+::: panel-tabset
 ## The Plot
+
 ```{r echo=FALSE}
 plot_ly(data = exam_data, 
              x = ~MATHS, 
              y = ~ENGLISH)
 ```
+
 ## The Code
+
 ```{r eval=FALSE}
 plot_ly(data = exam_data, 
              x = ~MATHS, 
              y = ~ENGLISH)
 ```
-::::
+:::
 
 ## Working with VIsual Variable: plot_ly method
 
-Below is a example of colour argument mapped to a qualitative visual variable (i.e.RACE). 
+Below is a example of colour argument mapped to a qualitative visual variable (i.e. RACE).
 
-:::: panel-tabset 
+::: panel-tabset
 ## The Plot
 
 ```{r echo=FALSE}
@@ -439,22 +444,22 @@ plot_ly(data = exam_data,
         y = ~MATHS, 
         color = ~RACE)
 ```
-::::
+:::
 
 ## Coordinated Multiple Views with plotly
 
 The creation of a coordinated linked plot by using plotly involves three steps:
 
-- Highlight_key() of plotly package is used as shared data.
+- *Highlight_key()* of plotly package is used as shared data.
 - Two scatterplots will be created by using ggplot2 functions.
-- Lastly, subplot() of plotly package is used to place them next to each other side-by-side.
+- Lastly, *subplot()* of plotly package is used to place them next to each other side-by-side.
 
 Thing to learn from the code chunk:
 
-- Highlight_key() simply creates an object of class crosstalk::SharedData.
+- *Highlight_key()* simply creates an object of class crosstalk::SharedData.
 - Visit this [link](https://rstudio.github.io/crosstalk/) to learn more about crosstalk.
 
-:::: panel-tabset
+::: panel-tabset
 ## The Plot
 
 ```{r echo=FALSE}
@@ -496,13 +501,15 @@ p2 <- ggplot(data=d,
 subplot(ggplotly(p1),
         ggplotly(p2))
 ```
-::::
+:::
+
 ::: callout-note
 ## Note
+
 - plotly + crosstalk linking is another way to make plots interact with each other, beside ggiraph.
 - The main idea is to create a shared data. This is case, it is the "d \<- highlight_key(exam_data)"
 - p1 and p2 uses "data=d", which linked them together.
-- ggplotly" converts them into interactive plotly.
+- ggplotly converts them into interactive plotly.
 :::
 
 ## Interactive Data Visualisation - crosstalk methods!
@@ -524,11 +531,11 @@ DT::datatable(exam_data, class= "compact")
 
 Things to learn:
 
-- highlight() is a function of plotly package. It sets a variety of options for brushing (i.e., highlighting) multiple plots. These options are primarily designed for linking multiple plotly graphs, and may not behave as expected when linking plotly to another htmlwidget package via crosstalk. In some cases, other htmlwidgets will respect these options, such as persistent selection in leaflet.
+- *highlight()* is a function of plotly package. It sets a variety of options for brushing (i.e., highlighting) multiple plots. These options are primarily designed for linking multiple plotly graphs, and may not behave as expected when linking plotly to another htmlwidget package via crosstalk. In some cases, other htmlwidgets will respect these options, such as persistent selection in leaflet.
 
-- bscols() is a helper function of crosstalk package. It makes it easy to put HTML elements side by side. It can be called directly from the console but is especially designed to work in an R Markdown document. Warning: This will bring in all of Bootstrap!
+- *bscols()* is a helper function of crosstalk package. It makes it easy to put HTML elements side by side. It can be called directly from the console but is especially designed to work in an R Markdown document. Warning: This will bring in all of Bootstrap!
 
-:::: panel-tabset
+::: panel-tabset
 ## The Plot
 
 ```{r echo=FALSE}
@@ -566,4 +573,4 @@ crosstalk::bscols(gg,
                   DT::datatable(d), 
                   widths = 5)        
 ```
-::::
+:::
