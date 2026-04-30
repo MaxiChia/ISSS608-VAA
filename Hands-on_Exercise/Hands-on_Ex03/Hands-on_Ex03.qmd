@@ -7,7 +7,7 @@ execute:
   eval: true
   echo: true
   warning: false
-  freeze: true
+  freeze: false
 ---
 
 # Programming Interactive Data Visualisation with R
