@@ -1,5 +1,5 @@
 ---
-title: "Hands-on Exercise 2"
+title: "Hands-on Exercise 2: Beyond ggplot2 Fundamentals"
 author: "Chia Song Tuck Albert"
 date: "April 10, 2026"
 date-modified: "last-modified"
@@ -7,7 +7,7 @@ execute:
   eval: true
   echo: true
   warning: false
-  freeze: false
+  freeze: true
 ---
 
 # Beyond ggplot2 Fundamentals
@@ -16,13 +16,13 @@ execute:
 
 In this exercise, besides tidyverse, which i used for Hands-on_Ex01, there are four more packages that we need. They are:
 
--   ggrepel: repel overlapping text labels.
+- ggrepel: repel overlapping text labels.
 
--   ggthemes: provides some extra themes, geoms, and scales for ‘ggplot2’.
+- ggthemes: provides some extra themes, geoms, and scales for ‘ggplot2’.
 
--   hrbrthemes: provides typography-centric themes and theme components for ggplot2.
+- hrbrthemes: provides typography-centric themes and theme components for ggplot2.
 
--   patchwork: preparing composite figure created using ggplot2.
+- patchwork: preparing composite figure created using ggplot2.
 
 ```{r}
 pacman::p_load(ggrepel, patchwork, 
@@ -40,7 +40,7 @@ exam_data <- read_csv("Data/Exam_data.csv")
 
 ## Beyond ggplot2 Annotation: ggrepel
 
-::: panel-tabset
+:::: panel-tabset
 ## The Plot
 
 ```{r echo=FALSE}
@@ -60,6 +60,7 @@ ggplot(data=exam_data,
 
 ## The Code
 
+::: {style="font-size: 1.4em"}
 ```{r eval=FALSE}
 ggplot(data=exam_data, 
        aes(x= MATHS, 
@@ -75,6 +76,7 @@ ggplot(data=exam_data,
   ggtitle("English scores versus Maths scores for Primary 3")
 ```
 :::
+::::
 
 ## Working with ggrepel
 
