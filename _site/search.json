@@ -7,6 +7,13 @@
     "text": "Welcome to ISSS608 Visual Analytics and Application!"
   },
   {
+    "objectID": "In-Class_Exercise/In-Class_Ex02/In-Class_Ex02.html",
+    "href": "In-Class_Exercise/In-Class_Ex02/In-Class_Ex02.html",
+    "title": "In-Class Exercise 02",
+    "section": "",
+    "text": "In-Class_Ex02 | Tableau Public"
+  },
+  {
     "objectID": "Hands-on_Exercise/Hands-on_Ex03/Hands-on_Ex03a.html",
     "href": "Hands-on_Exercise/Hands-on_Ex03/Hands-on_Ex03a.html",
     "title": "Hands-on_Ex03a - Programming Interactive Data Visualisation with R",
@@ -439,5 +446,12 @@
     "title": "Hands-on_Ex03b - Programming Animated Statistical Graphics with R",
     "section": "",
     "text": "In this sub-section, you will learn how to create an animated bubble plot by using plot_ly() method.\n\nThe PlotThe Code\n\n\n\n\n\n\n\n\n\n\n\nbp &lt;- globalPop %&gt;%\n  plot_ly(x = ~Old, \n          y = ~Young, \n          size = ~Population, \n          color = ~Continent,\n          sizes = c(2, 100),\n          frame = ~Year, \n          text = ~Country, \n          hoverinfo = \"text\",\n          type = 'scatter',\n          mode = 'markers'\n          ) %&gt;%\n  layout(showlegend = FALSE)\nbp"
+  },
+  {
+    "objectID": "In-Class_Exercise/In-Class_Ex03/In-Class_Ex03.html",
+    "href": "In-Class_Exercise/In-Class_Ex03/In-Class_Ex03.html",
+    "title": "In-Class Exercise 03",
+    "section": "",
+    "text": "In-Class_Ex03\n\nIn-Class_Ex03b"
   }
 ]

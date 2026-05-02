@@ -1,0 +1,17 @@
+---
+title: "In-Class Exercise 03"
+author: "Albert Chia"
+execute:
+  eval: true
+  echo: true
+  warning: false
+  freeze: true
+---
+
+![](images/clipboard-3035838692.png)
+
+[In-Class_Ex03](https://public.tableau.com/app/profile/albert.chia/viz/In-Class_Ex03_17777076298480/Story1)
+
+![](images/clipboard-1718217687.png)
+
+[In-Class_Ex03b](https://public.tableau.com/app/profile/albert.chia/viz/In-Class_Ex03b/Pyramid)

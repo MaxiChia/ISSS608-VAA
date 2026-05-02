@@ -1,0 +1,11 @@
+---
+title: "In-Class Exercise 02"
+author: "Albert Chia"
+execute:
+  eval: true
+  echo: true
+  warning: false
+  freeze: false
+---
+
+![](images/clipboard-4288353861.jpeg)In-Class_Ex02 \| Tableau Public
