@@ -2,77 +2,94 @@
 title: "Hi, i am Albert Chia!"
 ---
 
-::: {.hero-box}
-##  Welcome to my Visual Analytics Journey!
+::: hero-box
+## Welcome to my Visual Analytics Journey!
 
 This website documents my learning journey for **ISSS608 Visual Analytics and Applications**.
 
 It includes my hands-on exercises, in-class exercises, and future take-home exercises. Through these works, I will explore how data visualisation can be used to understand patterns, communicate insights, and support better decision-making.
-
 :::
 
 ## Latest Works
 
-::: {.grid}
-
-<a href="Hands-on_Ex01.html" class="card-link">
+:::: grid
+<a href="Hands-on_Exercise/Hands-on_Ex01/Hands-on_Ex01.html" class="card-link">
 
 ::: {.g-col-4 .work-card}
-
 ### Hands-on Exercise 1
 
 A Layered Grammar of Graphics: ggplot2 methods
-
 :::
 
 </a>
 
-<a href="Hands-on_Ex02.html" class="card-link">
+<a href="Hands-on_Exercise/Hands-on_Ex02/Hands-on_Ex02.html" class="card-link">
 
 ::: {.g-col-4 .work-card}
-
 ### Hands-on Exercise 2
 
 Beyond ggplot2 Fundamentals
-
 :::
 
 </a>
 
-<a href="Hands-on_Ex03a.html" class="card-link">
+<a href="Hands-on_Exercise/Hands-on_Ex03/Hands-on_Ex03a.html" class="card-link">
 
 ::: {.g-col-4 .work-card}
-
 ### Hands-on Exercise 3a
 
 Interactive Data Visualisation with R
-
 :::
 
 </a>
 
-<a href="Hands-on_Ex03b.html" class="card-link">
+<a href="Hands-on_Exercise/Hands-on_Ex03/Hands-on_Ex03b.html" class="card-link">
 
 ::: {.g-col-4 .work-card}
-
 ### Hands-on Exercise 3b
 
 Animated Statistical Graphics with R
-
 :::
 
 </a>
 
-<a href="Hands-on_Ex04a.html" class="card-link">
+<a href="Hands-on_Exercise/Hands-on_Ex04/Hands-on_Ex04a.html" class="card-link">
 
 ::: {.g-col-4 .work-card}
-
 ### Hands-on Exercise 4a
 
 Visualising Distribution
-
 :::
 
 </a>
 
+<a href="Hands-on_Exercise/Hands-on_Ex04/Hands-on_Ex04b.html" class="card-link">
+
+::: {.g-col-4 .work-card}
+### Hands-on Exercise 4b
+
+Visual Statistical Analysis
 :::
+
+</a>
+
+<a href="Hands-on_Exercise/Hands-on_Ex04/Hands-on_Ex04c.html" class="card-link">
+
+::: {.g-col-4 .work-card}
+### Hands-on Exercise 4c
+
+Visualising Uncertainty
+:::
+
+</a>
+
+<a href="Hands-on_Exercise/Hands-on_Ex04/Hands-on_Ex04d.html" class="card-link">
+
+::: {.g-col-4 .work-card}
+### Hands-on Exercise 4d
+
+Funnel Plots for Fair Comparisons
+:::
+
+</a>
+::::

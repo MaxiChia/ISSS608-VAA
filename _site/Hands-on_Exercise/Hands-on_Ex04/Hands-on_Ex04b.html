@@ -9,7 +9,7 @@
 <meta name="author" content="Albert Chia">
 <meta name="dcterms.date" content="2026-05-07">
 
-<title>Hands-on_Ex04a – ISSS608-VAA</title>
+<title>Hands-on_Ex04b – ISSS608-VAA</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -158,6 +158,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="../../../Hands-on_Exercise/Hands-on_Ex04/Hands-on_Ex04b.html">
  <span class="dropdown-text">Hands-on Exercise 4b: Visual Statistical Analysis</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../../../Hands-on_Exercise/Hands-on_Ex04/Hands-on_Ex04c.html">
+ <span class="dropdown-text">Hands-on Exercise 4c: Visualising Uncertainty</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../Hands-on_Exercise/Hands-on_Ex04/Hands-on_Ex04d.html">
+ <span class="dropdown-text">Hands-on Exercise 4d: Funnel Plots for Fair Comparisons</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -210,8 +218,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#one-sample-test-gghistostats-method" id="toc-one-sample-test-gghistostats-method" class="nav-link" data-scroll-target="#one-sample-test-gghistostats-method">One-sample test: gghistostats() method</a></li>
   <li><a href="#unpacking-the-bayes-factor" id="toc-unpacking-the-bayes-factor" class="nav-link" data-scroll-target="#unpacking-the-bayes-factor">Unpacking the Bayes Factor</a></li>
   <li><a href="#how-to-interpret-bayes-factor" id="toc-how-to-interpret-bayes-factor" class="nav-link" data-scroll-target="#how-to-interpret-bayes-factor">How to interpret Bayes Factor</a></li>
+  <li><a href="#two-sample-mean-test-ggbetweenstats" id="toc-two-sample-mean-test-ggbetweenstats" class="nav-link" data-scroll-target="#two-sample-mean-test-ggbetweenstats">Two-sample mean test: <code>ggbetweenstats()</code></a></li>
   <li><a href="#oneway-anova-test-ggbetweenstats-method" id="toc-oneway-anova-test-ggbetweenstats-method" class="nav-link" data-scroll-target="#oneway-anova-test-ggbetweenstats-method">Oneway ANOVA Test: <code>ggbetweenstats()</code> method</a></li>
   <li><a href="#ggbetweenstats---summary-of-tests" id="toc-ggbetweenstats---summary-of-tests" class="nav-link" data-scroll-target="#ggbetweenstats---summary-of-tests">ggbetweenstats - Summary of tests</a></li>
+  <li><a href="#significant-test-of-correlation-ggscatterstats" id="toc-significant-test-of-correlation-ggscatterstats" class="nav-link" data-scroll-target="#significant-test-of-correlation-ggscatterstats">Significant Test of Correlation: <em>ggscatterstats()</em></a></li>
   <li><a href="#significant-test-of-association-dependence-ggbarstats-methods" id="toc-significant-test-of-association-dependence-ggbarstats-methods" class="nav-link" data-scroll-target="#significant-test-of-association-dependence-ggbarstats-methods">Significant Test of Association (Dependence) : <em>ggbarstats()</em> methods</a></li>
   </ul></li>
   </ul>
@@ -222,7 +232,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Hands-on_Ex04a</h1>
+<h1 class="title">Hands-on_Ex04b</h1>
 </div>
 
 
@@ -246,7 +256,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">May 7, 2026</p>
+      <p class="date-modified">May 8, 2026</p>
     </div>
   </div>
     
@@ -364,7 +374,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="how-to-interpret-bayes-factor" class="level2">
 <h2 class="anchored" data-anchor-id="how-to-interpret-bayes-factor">How to interpret Bayes Factor</h2>
 <p>A Bayes Factor can be any positive number. One of the most common interpretations is this one—first proposed by Harold Jeffereys (1961) and slightly modified by <a href="https://www-tandfonline-com.libproxy.smu.edu.sg/doi/pdf/10.1080/00031305.1999.10474443?needAccess=true">Lee and Wagenmakers</a> in 2013:</p>
-<p><img src="Images/Bayes_Factor.png" class="img-fluid"> ## Two-sample mean test: <code>ggbetweenstats()</code> In the code chunk below, <a href="https://indrajeetpatil.github.io/ggstatsplot/reference/ggbetweenstats.html">ggbetweenstats()</a> is used to build a visual for two-sample mean test of Maths scores by gender.</p>
+<p><img src="Images/Bayes_Factor.png" class="img-fluid"></p>
+</section>
+<section id="two-sample-mean-test-ggbetweenstats" class="level2">
+<h2 class="anchored" data-anchor-id="two-sample-mean-test-ggbetweenstats">Two-sample mean test: <code>ggbetweenstats()</code></h2>
+<p>In the code chunk below, <a href="https://indrajeetpatil.github.io/ggstatsplot/reference/ggbetweenstats.html">ggbetweenstats()</a> is used to build a visual for two-sample mean test of Maths scores by gender.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">The Plot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">The Code</a></li></ul>
 <div class="tab-content">
@@ -447,7 +461,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="ggbetweenstats---summary-of-tests" class="level2">
 <h2 class="anchored" data-anchor-id="ggbetweenstats---summary-of-tests">ggbetweenstats - Summary of tests</h2>
-<p><img src="Images/image7.jpg" class="img-fluid"> <img src="Images/image8.jpg" class="img-fluid"> <img src="Images/image9.jpg" class="img-fluid"> ## Significant Test of Correlation: <em>ggscatterstats()</em> In the code chunk below, <a href="https://indrajeetpatil.github.io/ggstatsplot/reference/ggscatterstats.html">ggscatterstats()</a> is used to build a visual for Significant Test of Correlation between Maths scores and English scores.</p>
+<p><img src="Images/image7.jpg" class="img-fluid"> <img src="Images/image8.jpg" class="img-fluid"> <img src="Images/image9.jpg" class="img-fluid"></p>
+</section>
+<section id="significant-test-of-correlation-ggscatterstats" class="level2">
+<h2 class="anchored" data-anchor-id="significant-test-of-correlation-ggscatterstats">Significant Test of Correlation: <em>ggscatterstats()</em></h2>
+<p>In the code chunk below, <a href="https://indrajeetpatil.github.io/ggstatsplot/reference/ggscatterstats.html">ggscatterstats()</a> is used to build a visual for Significant Test of Correlation between Maths scores and English scores.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">The Plot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">The Code</a></li></ul>
 <div class="tab-content">

@@ -49,8 +49,7 @@ ggridges package provides 2 main geom to plot gridgeline plots, they are: [geom_
 
 The ridgeline plot below is plotted by using `geom_density_ridges()`
 
-:::: panel-tabset
-
+::: panel-tabset
 ## The Ridgeline Plot
 
 ```{r echo=FALSE}
@@ -92,8 +91,7 @@ ggplot(exam,
   scale_y_discrete(name = NULL, expand = expansion(add = c(0.2, 2.6))) +
   theme_ridges()   
 ```
-
-::::
+:::
 
 ::: callout-note
 ## Note
@@ -105,7 +103,7 @@ The key thing about this code is the new insert of geoom_density_ridges(). It in
 
 Sometimes we would like to have the area under a ridgeline not filled with a single solid color but rather with colors that vary in some form along the x axis. This effect can be achieved by using either [geom_ridgeline_gradient()](https://wilkelab.org/ggridges/reference/geom_ridgeline_gradient.html) or [geom_density_ridges_gradient()](https://wilkelab.org/ggridges/reference/geom_ridgeline_gradient.html). Both geoms work just like `geom_ridgeline()` and `geom_density_ridges()`, except that they allow for varying fill colors. However, they do not allow for alpha transparency in the fill. For technical reasons, we can have changing fill colors or transparency but not both.
 
-:::: panel-tabset
+::: panel-tabset
 ## The Plot
 
 ```{r echo=FALSE}
@@ -145,8 +143,7 @@ ggplot(exam,
   scale_y_discrete(name = NULL, expand = expansion(add = c(0.2, 2.6))) +
   theme_ridges()       
 ```
-
-::::
+:::
 
 ::: callout-note
 ## Note
@@ -192,10 +189,10 @@ ggplot(exam,
 ::: callout-note
 ## Note
 
-`ecdf` = empirical cumulative distribution function.
-`fill = 0.5 - abs(0.5 - stat(ecdf))` - colour each part of the ridge based on how close it is to the middle of the distribution.
+`ecdf` = empirical cumulative distribution function. `fill = 0.5 - abs(0.5 - stat(ecdf))` - colour each part of the ridge based on how close it is to the middle of the distribution.
 :::
 ::::
+
 ::: callout-important
 ## Important
 
@@ -203,10 +200,12 @@ It is important include the argument `calc_ecdf = TRUE` in `stat_density_ridges(
 :::
 
 ## Ridgeline plots with quantile lines
+
 By using `geom_density_ridges_gradient()`, we can colour the ridgeline plot by quantile, via the calculated `stat(quantile)` aesthetic as shown in the figure below.
 
 :::: panel-tabset
 ## The Plot
+
 ```{r echo=FALSE}
 ggplot(exam,
        aes(x = ENGLISH, 
@@ -221,7 +220,9 @@ ggplot(exam,
   scale_fill_viridis_d(name = "Quartiles") +
   theme_ridges()           
 ```
+
 ## The Code
+
 ```{r eval=FALSE}
 ggplot(exam,
        aes(x = ENGLISH, 
@@ -239,15 +240,17 @@ ggplot(exam,
 
 ::: callout-note
 ## Note
+
 - Instead of colouring continuously across the x-axis, it divides the distribution into 4 sections (quartiles).
-- `scale_fill_viridis_d` - discrete because quartiles are categories. 
+- `scale_fill_viridis_d` - discrete because quartiles are categories.
 :::
 ::::
 
 Instead of using number to define the quantiles, we can also specify quantiles by cut points such as 2.5% and 97.5% tails to colour the ridgeline plot as shown in the figure below.
 
-:::: panel-tabset
+::: panel-tabset
 ## The Plot
+
 ```{r echo=FALSE}
 ggplot(exam,
        aes(x = ENGLISH, 
@@ -266,7 +269,9 @@ ggplot(exam,
   ) +
   theme_ridges()             
 ```
+
 ## The Code
+
 ```{r eval=FALSE}
 ggplot(exam,
        aes(x = ENGLISH, 
@@ -285,7 +290,7 @@ ggplot(exam,
   ) +
   theme_ridges()            
 ```
-::::
+:::
 
 ## Visualising Distribution with Raincloud Plot
 
@@ -294,12 +299,14 @@ Raincloud Plot is a data visualisation techniques that produces a half-density t
 In this section, you will learn how to create a raincloud plot to visualise the distribution of English score by race. It will be created by using functions provided by **ggdist** and ggplot2 packages.
 
 ## Plotting a Half Eye graph
+
 First, we will plot a Half-Eye graph by using `stat_halfeye()` of ggdist package.
 
 This produces a Half Eye visualization, which is contains a half-density and a slab-interval.
 
 :::: panel-tabset
 ## The Plot
+
 ```{r echo=FALSE}
 ggplot(exam, 
        aes(x = RACE, 
@@ -309,7 +316,9 @@ ggplot(exam,
                .width = 0,
                point_colour = NA)            
 ```
+
 ## The Code
+
 ```{r eval=FALSE}
 ggplot(exam, 
        aes(x = RACE, 
@@ -322,15 +331,18 @@ ggplot(exam,
 
 ::: callout-note
 ## Things to learn from the code chunk above
+
 We remove the slab interval by setting `.width = 0` and `point_colour` = NA.
 :::
 ::::
 
 ## Adding the boxplot with 'geom_boxplot()'
+
 Next, we will add the second geometry layer using [geom_boxplot()](https://r4va.netlify.app/chap09) of ggplot2. This produces a narrow boxplot. We reduce the width and adjust the opacity.
 
-:::: panel-tabset
+::: panel-tabset
 ## The Plot
+
 ```{r echo=FALSE}
 ggplot(exam, 
        aes(x = RACE, 
@@ -342,7 +354,9 @@ ggplot(exam,
   geom_boxplot(width = .20,
                outlier.shape = NA)          
 ```
+
 ## The Code
+
 ```{r eval=FALSE}
 ggplot(exam, 
        aes(x = RACE, 
@@ -354,13 +368,15 @@ ggplot(exam,
   geom_boxplot(width = .20,
                outlier.shape = NA)        
 ```
-::::
+:::
 
 ## Adding the Dot Plots with `stat_dots()`
+
 Next, we will add the third geometry layer using [stat_dots()](https://mjskay.github.io/ggdist/reference/stat_dots.html) of ggdist package. This produces a half-dotplot, which is similar to a histogram that indicates the number of samples (number of dots) in each bin. We select side = “left” to indicate we want it on the left-hand side.
 
 :::: panel-tabset
 ## The Plot
+
 ```{r echo=FALSE}
 ggplot(exam, 
        aes(x = RACE, 
@@ -376,7 +392,9 @@ ggplot(exam,
             binwidth = .5,
             dotsize = 2)            
 ```
+
 ## The Code
+
 ```{r eval=FALSE}
 ggplot(exam, 
        aes(x = RACE, 
@@ -392,17 +410,21 @@ ggplot(exam,
             binwidth = .5,
             dotsize = 2)            
 ```
+
 ::: callout-note
 ## Note
-- `adjust = 0.5` - Controls smoothness of the density curve. Smaller means more wavy; larger means smoother. 
+
+- `adjust = 0.5` - Controls smoothness of the density curve. Smaller means more wavy; larger means smoother.
 :::
 ::::
 
 ## Finishing Touch
+
 Lastly, [coord_flip()](https://ggplot2.tidyverse.org/reference/coord_flip.html) of ggplot2 package will be used to flip the raincloud chart horizontally to give it the raincloud appearance. At the same time, `theme_economist()` of ggthemes package is used to give the raincloud chart a professional publishing standard look.
 
-:::: panel-tabset
+::: panel-tabset
 ## The Plot
+
 ```{r echo=FALSE}
 ggplot(exam, 
        aes(x = RACE, 
@@ -420,7 +442,9 @@ ggplot(exam,
   coord_flip() +
   theme_economist()           
 ```
+
 ## The Code
+
 ```{r eval=FALSE}
 ggplot(exam, 
        aes(x = RACE, 
@@ -438,5 +462,4 @@ ggplot(exam,
   coord_flip() +
   theme_economist()           
 ```
-
-::::
+:::
