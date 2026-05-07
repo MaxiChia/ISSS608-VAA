@@ -1,8 +1,77 @@
-/* css styles */
+/* CSS styles */
+
 body {
   font-size: 20px;
   line-height: 1.6;
 }
+
+/* Inline code styling */
 code {
   color: purple;
+}
+
+/* Hero section */
+.hero-box {
+  background-color: #f7f9f8;
+  border-left: 6px solid #8dbfae;
+  padding: 25px 30px;
+  border-radius: 12px;
+  margin-top: 30px;
+  margin-bottom: 40px;
+}
+
+/* Hero heading */
+.hero-box h2 {
+  margin-top: 0;
+  font-size: 22px;
+  color: #5f6b6d;
+}
+
+/* Work cards */
+.work-card {
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: white;
+  transition: 0.3s;
+
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Hover effect */
+.work-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Card title */
+.work-card h3 {
+  margin-top: 0;
+  font-size: 18px;
+  line-height: 1.3;
+}
+
+/* Links inside cards */
+.work-card a {
+  font-weight: bold;
+  text-decoration: none;
+  color: #6ea896;
+}
+
+/* Link hover */
+.work-card a:hover {
+  color: #4f7f70;
+}
+
+.card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.card-link:hover {
+  text-decoration: none;
+  color: inherit;
 }

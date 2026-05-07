@@ -1,5 +1,5 @@
 ---
-title: "Hands-on_Ex04"
+title: "Hands-on_Ex04a"
 author: "Albert Chia"
 date: "May 07, 2026"
 date-modified: "last-modified"
@@ -7,7 +7,7 @@ execute:
   eval: true
   echo: true
   warning: false
-  freeze: false
+  freeze: true
 ---
 
 # Visualising Distribution
@@ -26,7 +26,7 @@ In this exercise, we will be using the following R packages:
 pacman::p_load(ggdist, ggridges, ggthemes, colorspace, tidyverse)
 ```
 
-Importing Data
+## Importing Data
 
 Similar to the previous Hands-on exercise, this exercise uses the *read_csv()* of readr package to import Exam_data.csv into R.
 
@@ -93,13 +93,13 @@ ggplot(exam,
   theme_ridges()   
 ```
 
+::::
+
 ::: callout-note
 ## Note
 
 The key thing about this code is the new insert of geoom_density_ridges(). It includes the `scale` to control the height of the ridge; `rel_min_height` removes very tiny density tails, making the graph cleaner; and `bandwidth` controls the smoothness of the density curve.
 :::
-
-::::
 
 ## Varying fill colors along the x axis
 
@@ -146,12 +146,13 @@ ggplot(exam,
   theme_ridges()       
 ```
 
+::::
+
 ::: callout-note
 ## Note
 
 `geom_density_ridges_gradient` allows us to change the colour gradients. `viridis` is a colour palette package. It makes the plot nicer. `C` is just one of a viridis style.
 :::
-::::
 
 ## Mapping the probabilities directly onto colour
 

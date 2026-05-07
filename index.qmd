@@ -1,5 +1,78 @@
 ---
-title: "ISSS608-VAA"
+title: "Hi, i am Albert Chia!"
 ---
 
-[**Welcome to ISSS608 Visual Analytics and Application!**]{.underline}
+::: {.hero-box}
+##  Welcome to my Visual Analytics Journey!
+
+This website documents my learning journey for **ISSS608 Visual Analytics and Applications**.
+
+It includes my hands-on exercises, in-class exercises, and future take-home exercises. Through these works, I will explore how data visualisation can be used to understand patterns, communicate insights, and support better decision-making.
+
+:::
+
+## Latest Works
+
+::: {.grid}
+
+<a href="Hands-on_Ex01.html" class="card-link">
+
+::: {.g-col-4 .work-card}
+
+### Hands-on Exercise 1
+
+A Layered Grammar of Graphics: ggplot2 methods
+
+:::
+
+</a>
+
+<a href="Hands-on_Ex02.html" class="card-link">
+
+::: {.g-col-4 .work-card}
+
+### Hands-on Exercise 2
+
+Beyond ggplot2 Fundamentals
+
+:::
+
+</a>
+
+<a href="Hands-on_Ex03a.html" class="card-link">
+
+::: {.g-col-4 .work-card}
+
+### Hands-on Exercise 3a
+
+Interactive Data Visualisation with R
+
+:::
+
+</a>
+
+<a href="Hands-on_Ex03b.html" class="card-link">
+
+::: {.g-col-4 .work-card}
+
+### Hands-on Exercise 3b
+
+Animated Statistical Graphics with R
+
+:::
+
+</a>
+
+<a href="Hands-on_Ex04a.html" class="card-link">
+
+::: {.g-col-4 .work-card}
+
+### Hands-on Exercise 4a
+
+Visualising Distribution
+
+:::
+
+</a>
+
+:::
