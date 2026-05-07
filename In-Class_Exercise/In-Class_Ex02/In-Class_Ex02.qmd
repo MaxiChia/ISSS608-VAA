@@ -5,7 +5,7 @@ execute:
   eval: true
   echo: true
   warning: false
-  freeze: false
+  freeze: true
 ---
 
 ![](images/clipboard-4288353861.jpeg)
