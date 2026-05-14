@@ -1,5 +1,5 @@
 ---
-title: "Hands-on_Ex05a"
+title: "Hands-On Exercise 5a"
 author: "Albert Chia"
 date: "May 14, 2026"
 date-modified: "last-modified"
@@ -7,13 +7,13 @@ execute:
   eval: true
   echo: true
   warning: false
-  freeze: false
+  freeze: true
 format:
   html:
     page-layout: full
 ---
 
-# Hands-On Exercise 5a: Creating Ternary Plot with R
+# Creating Ternary Plot with R
 
 ## 1. Overview
 

@@ -1,5 +1,5 @@
 ---
-title: "Hands-on_Ex05c"
+title: "Hands-On Exercise 5c"
 author: "Albert Chia"
 date: "May 14, 2026"
 date-modified: "last-modified"
@@ -7,13 +7,13 @@ execute:
   eval: true
   echo: true
   warning: false
-  freeze: false
+  freeze: true
 format:
   html:
     page-layout: full
 ---
 
-# Hands-On Exercise 5c: Heatmap for Visualising and Analysing Multivariate Data
+# Heatmap for Visualising and Analysing Multivariate Data
 
 ## 1. Overview
 

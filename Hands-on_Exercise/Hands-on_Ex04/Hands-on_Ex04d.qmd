@@ -1,5 +1,5 @@
 ---
-title: "Hands-on_Ex04d"
+title: "Hands-On Exercise 4d"
 author: "Albert Chia"
 date: "May 07, 2026"
 date-modified: "last-modified"
@@ -8,6 +8,9 @@ execute:
   echo: true
   warning: false
   freeze: true
+format:
+  html:
+    page-layout: full
 ---
 
 # Funnel Plots for Fair Comparisons
@@ -37,6 +40,7 @@ pacman::p_load(tidyverse, FunnelPlotR, plotly, knitr)
 In this section, COVID-19_DKI_Jakarta will be used. The data was downloaded from [Open Data Covid-19 Provinsi DKI Jakarta portal](https://riwayat-file-covid-19-dki-jakarta-jakartagis.hub.arcgis.com/). For this hands-on exercise, we are going to compare the cumulative COVID-19 cases and death by sub-district (i.e. kelurahan) as at 31st July 2021, DKI Jakarta.
 
 The code chunk below imports the data into R and save it into a tibble data frame object called *covid19*.
+
 ```{r}
 covid19 <- read_csv("data/COVID-19_DKI_Jakarta.csv") %>%
   mutate_if(is.character, as.factor)
@@ -45,20 +49,23 @@ covid19 <- read_csv("data/COVID-19_DKI_Jakarta.csv") %>%
 ```{r echo=FALSE}
 covid19 
 ```
+
 ## FunnelPlotR methods
+
 [FunnelPlotR](https://nhs-r-community.github.io/FunnelPlotR/) package uses ggplot to generate funnel plots. It requires a `numerator` (events of interest), `denominator` (population to be considered) and `group`. The key arguments selected for customisation are:
 
-  - `limit`: plot limits (95 or 99).
-  - `label_outliers`: to label outliers (true or false).
-  - `Poisson_limits`: to add Poisson limits to the plot.
-  - `OD_adjust`: to add overdispersed limits to the plot.
-  - `xrange` and `yrange`: to specify the range to display for axes, acts like a zoom function.
-  - Other aesthetic components such as graph title, axis labels etc.
-  
+- `limit`: plot limits (95 or 99).
+- `label_outliers`: to label outliers (true or false).
+- `Poisson_limits`: to add Poisson limits to the plot.
+- `OD_adjust`: to add overdispersed limits to the plot.
+- `xrange` and `yrange`: to specify the range to display for axes, acts like a zoom function.
+- Other aesthetic components such as graph title, axis labels etc.
+
 ### FunnelPlotR methods: The basic plot
+
 The code chunk below plots a funnel plot.
 
-:::: panel-tabset
+::: panel-tabset
 ## The Plot
 
 ```{r echo=FALSE}
@@ -80,22 +87,23 @@ funnel_plot(
   group = `Sub-district`
 )  
 ```
-::::
+:::
 
-A funnel plot object with 267 points of which 0 are outliers. 
-Plot is adjusted for overdispersion. 
+A funnel plot object with 267 points of which 0 are outliers. Plot is adjusted for overdispersion.
 
 ::: callout-tip
 ## Things to learn from the code chunk above
+
 - `group` in this function is different from the scatterplot. Here, it defines the level of the points to be plotted i.e. Sub-district, District or City. If Cityc is chosen, there are only six data points.
 - By default, `data_type` argument is “SR”.
 - `limit`: Plot limits, accepted values are: 95 or 99, corresponding to 95% or 99.8% quantiles of the distribution.
 :::
 
 ### FunnelPlotR methods: Makeover 1
+
 The code chunk below plots a funnel plot.
 
-:::: panel-tabset
+::: panel-tabset
 ## The Plot
 
 ```{r echo=FALSE}
@@ -123,21 +131,22 @@ funnel_plot(
   yrange = c(0, 0.05)   #<<
 )
 ```
-::::
+:::
 
-A funnel plot object with 267 points of which 7 are outliers. 
-Plot is adjusted for overdispersion. 
+A funnel plot object with 267 points of which 7 are outliers. Plot is adjusted for overdispersion.
 
 ::: callout-tip
 ## Things to learn from the code chunk above
-- Added `data_type` argument is used to change from default “SR” to “PR” (i.e. proportions). 
+
+- Added `data_type` argument is used to change from default “SR” to “PR” (i.e. proportions).
 - Added `xrange` and `yrange` are used to set the range of x-axis and y-axis.
 :::
 
 ### FunnelPlotR methods: Makeover 2
+
 The code chunk below plots a funnel plot.
 
-:::: panel-tabset
+::: panel-tabset
 ## The Plot
 
 ```{r echo=FALSE}
@@ -173,22 +182,24 @@ funnel_plot(
   y_label = "Cumulative Fatality Rate"  #<<
 )
 ```
-::::
+:::
 
-A funnel plot object with 267 points of which 7 are outliers. 
-Plot is adjusted for overdispersion. 
+A funnel plot object with 267 points of which 7 are outliers. Plot is adjusted for overdispersion.
 
 ::: callout-tip
 ## Things to learn from the code chunk above
+
 - `label = NA` argument is to removed the default label outliers feature.
 - `title` argument is used to add plot title.
 - `x_label` and `y_label` arguments are used to add/edit x-axis and y-axis titles.
 :::
 
 ## Funnel Plot for Fair Visual Comparison: ggplot2 methods
+
 In this section, you will gain hands-on experience on building funnel plots step-by-step by using ggplot2. It aims to enhance you working experience of ggplot2 to customise speciallised data visualisation like funnel plot.
 
 ### Computing the basic derived fields
+
 To plot the funnel plot from scratch, we need to derive cumulative death rate and standard error of cumulative death rate.
 
 ```{r}
@@ -205,6 +216,7 @@ fit.mean <- weighted.mean(df$rate, 1/df$rate.se^2)
 ```
 
 ### Calculate lower and upper limits for 95% and 99.9% CI
+
 The code chunk below is used to compute the lower and upper limits for 95% confidence interval.
 
 ```{r}
@@ -218,9 +230,10 @@ dfCI <- data.frame(number.ll95, number.ul95, number.ll999,
 ```
 
 ### Plotting a static funnel plot
+
 In the code chunk below, ggplot2 functions are used to plot a static funnel plot.
 
-:::: panel-tabset
+::: panel-tabset
 ## The Plot
 
 ```{r echo=FALSE}
@@ -316,12 +329,13 @@ p <- ggplot(df, aes(x = Positive, y = rate)) +
         legend.key.height = unit(0.3, "cm"))
 p
 ```
-::::
+:::
 
 ### Interactive Funnel Plot: plotly + ggplot2
+
 The funnel plot created using ggplot2 functions can be made interactive with `ggplotly()` of **plotly** r package.
 
-:::: panel-tabset
+::: panel-tabset
 ## The Plot
 
 ```{r echo=FALSE}
@@ -341,4 +355,4 @@ fp_ggplotly <- ggplotly(p,
               "y"))
 fp_ggplotly
 ```
-::::
+:::

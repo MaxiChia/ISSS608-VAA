@@ -8,6 +8,9 @@ execute:
   echo: true
   warning: false
   freeze: true
+format:
+  html:
+    page-layout: full
 ---
 
 # A Layered Grammar of Graphics: ggplot2 methods
@@ -23,9 +26,9 @@ pacman::p_load(tidyverse)
 
 ## **Importing the Data Set**
 
--   The code chunk below imports *exam_data.csv* into R environment by using [*read_csv()*](https://readr.tidyverse.org/reference/read_delim.html) function of [**readr**](https://readr.tidyverse.org/) package.
+- The code chunk below imports *exam_data.csv* into R environment by using [*read_csv()*](https://readr.tidyverse.org/reference/read_delim.html) function of [**readr**](https://readr.tidyverse.org/) package.
 
--   **readr** is one of the tidyverse package.
+- **readr** is one of the tidyverse package.
 
 ```{r}
 exam_data <- read_csv('data/Exam_data.csv')
@@ -79,19 +82,19 @@ ggplot(data=exam_data,
 
 Geometric objects are the actual marks we put on a plot. Examples include:
 
--   *geom_point* for drawing individual points (e.g., a scatter plot)
+- *geom_point* for drawing individual points (e.g., a scatter plot)
 
--   *geom_line* for drawing lines (e.g., for a line charts)
+- *geom_line* for drawing lines (e.g., for a line charts)
 
--   *geom_smooth* for drawing smoothed lines (e.g., for simple trends or approximations)
+- *geom_smooth* for drawing smoothed lines (e.g., for simple trends or approximations)
 
--   *geom_bar* for drawing bars (e.g., for bar charts)
+- *geom_bar* for drawing bars (e.g., for bar charts)
 
--   *geom_histogram* for drawing binned values (e.g. a histogram)
+- *geom_histogram* for drawing binned values (e.g. a histogram)
 
--   *geom_polygon* for drawing arbitrary shapes
+- *geom_polygon* for drawing arbitrary shapes
 
--   *geom_map* for drawing polygons in the shape of a map! (You can access the data to use for these maps by using the map_data() function).
+- *geom_map* for drawing polygons in the shape of a map! (You can access the data to use for these maps by using the map_data() function).
 
 A plot must have at least one geom; there is no upper limit. You can add a geom to a plot using the **+** operator. For complete list, please refer to [here](https://ggplot2.tidyverse.org/reference/#section-layer-geoms).
 

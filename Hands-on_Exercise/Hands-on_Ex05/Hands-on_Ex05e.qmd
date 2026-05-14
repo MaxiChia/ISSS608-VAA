@@ -1,5 +1,5 @@
 ---
-title: "Hands-on_Ex05e"
+title: "Hands-On Exercise 5e"
 author: "Albert Chia"
 date: "May 14, 2026"
 date-modified: "last-modified"
@@ -7,13 +7,13 @@ execute:
   eval: true
   echo: true
   warning: false
-  freeze: false
+  freeze: true
 format:
   html:
     page-layout: full
 ---
 
-# Hands-On Exercise 5e: Treemap Visualisation with R
+# Treemap Visualisation with R
 
 ## 1. Overview
 
