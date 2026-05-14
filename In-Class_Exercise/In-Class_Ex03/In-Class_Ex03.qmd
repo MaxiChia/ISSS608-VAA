@@ -1,5 +1,5 @@
 ---
-title: "In-Class Exercise 03"
+title: "In-Class Exercise_03"
 author: "Albert Chia"
 execute:
   eval: true

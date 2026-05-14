@@ -10,65 +10,65 @@ This website documents my learning journey for **ISSS608 Visual Analytics and Ap
 It includes my hands-on exercises, in-class exercises, and future take-home exercises. Through these works, I will explore how data visualisation can be used to understand patterns, communicate insights, and support better decision-making.
 :::
 
-## Latest Works
+## Latest Hands-on_Exercises
 
 :::: grid
-<a href="Hands-on_Exercise/Hands-on_Ex01/Hands-on_Ex01.html" class="card-link">
+<a href="Hands-on_Exercise/Hands-on_Ex05/Hands-on_Ex05e.html" class="card-link">
 
 ::: {.g-col-4 .work-card}
-### Hands-on Exercise 1
+### Hands-on Exercise 5e
 
-A Layered Grammar of Graphics: ggplot2 methods
+Treemap Visualisation with R
 :::
 
 </a>
 
-<a href="Hands-on_Exercise/Hands-on_Ex02/Hands-on_Ex02.html" class="card-link">
+<a href="Hands-on_Exercise/Hands-on_Ex05/Hands-on_Ex05d.html" class="card-link">
 
 ::: {.g-col-4 .work-card}
-### Hands-on Exercise 2
+### Hands-on Exercise 5d
 
-Beyond ggplot2 Fundamentals
+Visual Multivariate Analysis with Parallel Coordinates Plot
 :::
 
 </a>
 
-<a href="Hands-on_Exercise/Hands-on_Ex03/Hands-on_Ex03a.html" class="card-link">
+<a href="Hands-on_Exercise/Hands-on_Ex05/Hands-on_Ex05c.html" class="card-link">
 
 ::: {.g-col-4 .work-card}
-### Hands-on Exercise 3a
+### Hands-on Exercise 5c
 
-Interactive Data Visualisation with R
+Heatmap for Visualising and Analysing Multivariate Data
 :::
 
 </a>
 
-<a href="Hands-on_Exercise/Hands-on_Ex03/Hands-on_Ex03b.html" class="card-link">
+<a href="Hands-on_Exercise/Hands-on_Ex05/Hands-on_Ex05b.html" class="card-link">
 
 ::: {.g-col-4 .work-card}
-### Hands-on Exercise 3b
+### Hands-on Exercise 5b
 
-Animated Statistical Graphics with R
+Visual Correlation Analysis
 :::
 
 </a>
 
-<a href="Hands-on_Exercise/Hands-on_Ex04/Hands-on_Ex04a.html" class="card-link">
+<a href="Hands-on_Exercise/Hands-on_Ex05/Hands-on_Ex05a.html" class="card-link">
 
 ::: {.g-col-4 .work-card}
-### Hands-on Exercise 4a
+### Hands-on Exercise 5a
 
-Visualising Distribution
+Creating Ternary Plot with R
 :::
 
 </a>
 
-<a href="Hands-on_Exercise/Hands-on_Ex04/Hands-on_Ex04b.html" class="card-link">
+<a href="Hands-on_Exercise/Hands-on_Ex04/Hands-on_Ex04d.html" class="card-link">
 
 ::: {.g-col-4 .work-card}
-### Hands-on Exercise 4b
+### Hands-on Exercise 4d
 
-Visual Statistical Analysis
+Funnel Plots for Fair Comparisons
 :::
 
 </a>
@@ -83,12 +83,62 @@ Visualising Uncertainty
 
 </a>
 
-<a href="Hands-on_Exercise/Hands-on_Ex04/Hands-on_Ex04d.html" class="card-link">
+<a href="Hands-on_Exercise/Hands-on_Ex04/Hands-on_Ex04b.html" class="card-link">
 
 ::: {.g-col-4 .work-card}
-### Hands-on Exercise 4d
+### Hands-on Exercise 4b
 
-Funnel Plots for Fair Comparisons
+Visual Statistical Analysis
+:::
+
+</a>
+
+<a href="Hands-on_Exercise/Hands-on_Ex04/Hands-on_Ex04a.html" class="card-link">
+
+::: {.g-col-4 .work-card}
+### Hands-on Exercise 4a
+
+Visualising Distribution
+:::
+
+</a>
+
+<a href="Hands-on_Exercise/Hands-on_Ex03/Hands-on_Ex03b.html" class="card-link">
+
+::: {.g-col-4 .work-card}
+### Hands-on Exercise 3b
+
+Animated Statistical Graphics with R
+:::
+
+</a>
+
+<a href="Hands-on_Exercise/Hands-on_Ex03/Hands-on_Ex03a.html" class="card-link">
+
+::: {.g-col-4 .work-card}
+### Hands-on Exercise 3a
+
+Interactive Data Visualisation with R
+:::
+
+</a>
+
+<a href="Hands-on_Exercise/Hands-on_Ex02/Hands-on_Ex02.html" class="card-link">
+
+::: {.g-col-4 .work-card}
+### Hands-on Exercise 2
+
+Beyond ggplot2 Fundamentals
+:::
+
+</a>
+
+<a href="Hands-on_Exercise/Hands-on_Ex01/Hands-on_Ex01.html" class="card-link">
+
+::: {.g-col-4 .work-card}
+### Hands-on Exercise 1
+
+A Layered Grammar of Graphics: ggplot2 methods
 :::
 
 </a>

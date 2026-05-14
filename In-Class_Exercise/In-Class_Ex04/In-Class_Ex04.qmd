@@ -1,0 +1,17 @@
+---
+title: "In-Class Exercise_04"
+author: "Albert Chia"
+execute:
+  eval: true
+  echo: true
+  warning: false
+  freeze: true
+---
+
+![](images/clipboard-2421498342.jpeg)
+
+In-Class_Ex04_Show me the statistics \| Tableau Public
+
+![](images/clipboard-3003279858.jpeg)
+
+In-Class_Ex04_Diverging Stacked Bar Chart \| Tableau Public
