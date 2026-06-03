@@ -59,7 +59,7 @@ There are two files provided:
 
 - **org_chart.json**: This file described TenantThread's organisational hierarchy, containing 75 nodes (1 company, 6 departments, 19 teams, and 49 persons) connected by hierarchical "contains" relationships.
 
-TOgether, these two files allow us to reconstruct both the *what happened* (event log) and the *who is involved* (org chart) dimensions of the anomalous posting incident.
+Together, these two files allow us to reconstruct both the *what happened* (event log) and the *who is involved* (org chart) dimensions of the anomalous posting incident.
 
 ## 3. Getting Started
 
@@ -87,6 +87,7 @@ The following R packages will be loaded using `pacman::p_load()`, which automati
 #| label: packages
 #| code-fold: true
 #| code-summary: "Show code"
+#| warning: false
 pacman::p_load(tidyverse, jsonlite, lubridate, here, scales, ggtext, patchwork, plotly, visNetwork, tidygraph, ggraph, igraph, DT, knitr, ggrepel)
 ```
 
