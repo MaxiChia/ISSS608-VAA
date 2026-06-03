@@ -1,0 +1,451 @@
+---
+title: "Visual Analytics for Insurance Data Discovery"
+subtitle: "ISSS608 Take-Home Exercise 01 — Executive Summary"
+author: "Albert Chia"
+date: "May 2026"
+format:
+  revealjs:
+    theme: simple
+    slide-number: true
+    transition: fade
+    fig-align: center
+    footer: "ISSS608 Visual Analytics | Albert Chia"
+    chalkboard: false
+    include-in-header:
+      text: |
+        <style>
+        .reveal h2 { font-size: 1.05em; margin-bottom: 0.2em; }
+        .reveal .slide-number { font-size: 0.7em; }
+        </style>
+execute:
+  eval: true
+  echo: false
+  warning: false
+  freeze: true
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+pacman::p_load(tidyverse, ggstatsplot, ggdist, ggridges,
+               GGally, patchwork, ggthemes, scales, knitr)
+
+insurance <- read_delim(
+  "data/motor_insurance.csv",
+  delim  = ";",
+  locale = locale(decimal_mark = ".", grouping_mark = "")
+)
+
+insurance_selected <- insurance %>%
+  select(insured_id, year, policy_type, policy_status, business_type,
+         payment_frequency, bonus_score, driver_age, vehicle_age,
+         fuel_type, vehicle_value, municipality_type, circulation_area,
+         total_premium, total_claims, total_incurred, total_exposure)
+
+insurance_selected <- insurance_selected %>%
+  mutate(
+    policy_type = factor(policy_type,
+                         levels = c("TP","TPG","CC","COMP_E","COMP_N"),
+                         labels = c("Third-party","Third-party + Glass",
+                                    "Third-party + Combined",
+                                    "Comprehensive (excess)",
+                                    "Comprehensive (no excess)")),
+    policy_status     = factor(policy_status, levels = c("A","C"),
+                               labels = c("Active","Cancelled")),
+    business_type     = factor(business_type, levels = c("NB","P"),
+                               labels = c("New Business","Portfolio")),
+    payment_frequency = factor(payment_frequency, levels = c("A","S","Q"),
+                               labels = c("Annual","Semiannual","Quarterly")),
+    bonus_score       = factor(bonus_score, levels = c("G","N","B"),
+                               labels = c("Good","Neutral","Bad")),
+    fuel_type         = factor(fuel_type, levels = c("D","G"),
+                               labels = c("Diesel","Gasoline")),
+    municipality_type = factor(municipality_type, levels = c("I","C","IS"),
+                               labels = c("Inland","Coastal","Islands")),
+    circulation_area  = factor(circulation_area, levels = c("U","R"),
+                               labels = c("Urban","Rural")),
+    year = factor(year)
+  )
+
+insurance_clean <- insurance_selected %>%
+  filter(total_premium > 0, total_exposure > 0) %>%
+  mutate(loss_ratio = total_incurred / total_premium)
+
+p95_lr  <- quantile(insurance_clean$loss_ratio[insurance_clean$loss_ratio > 0], 0.95)
+lr_data <- insurance_clean %>% filter(loss_ratio > 0, loss_ratio <= p95_lr)
+lr_pairs <- lr_data |> select(driver_age, vehicle_age, vehicle_value, total_premium, loss_ratio)
+
+pct_bar <- function(data, var, fill_color, title) {
+  data %>%
+    count({{ var }}) %>%
+    mutate(pct = n / sum(n), {{ var }} := fct_reorder({{ var }}, n)) %>%
+    ggplot(aes(x = {{ var }}, y = pct)) +
+    geom_col(fill = fill_color, width = 0.7) +
+    geom_text(aes(label = percent(pct, accuracy = 0.1)), hjust = -0.1, size = 3.2) +
+    scale_y_continuous(labels = percent_format(), expand = expansion(mult = c(0, 0.18))) +
+    coord_flip() +
+    labs(title = title, x = NULL, y = "Proportion") +
+    theme_minimal(base_size = 11) +
+    theme(plot.title = element_text(size = 10, face = "bold"))
+}
+
+p1 <- pct_bar(insurance_clean, policy_type,       "#4E79A7", "Policy Type")
+p2 <- pct_bar(insurance_clean, policy_status,     "#F28E2B", "Policy Status")
+p3 <- pct_bar(insurance_clean, business_type,     "#59A14F", "Business Type")
+p4 <- pct_bar(insurance_clean, payment_frequency, "#E15759", "Payment Frequency")
+p5 <- pct_bar(insurance_clean, bonus_score,       "#76B7B2", "Bonus Score")
+fig_5_1 <- (p1 | p2 | p3) / (p4 | p5 | plot_spacer()) +
+  plot_annotation(title = "Figure 5.1: Distribution of Policy Characteristics",
+                  theme = theme(plot.title = element_text(size = 13, face = "bold")))
+
+p6 <- pct_bar(insurance_clean, fuel_type,         "#B07AA1", "Fuel Type")
+p7 <- pct_bar(insurance_clean, municipality_type, "#FF9DA7", "Municipality Type")
+p8 <- pct_bar(insurance_clean, circulation_area,  "#9C755F", "Circulation Area")
+p9 <- pct_bar(insurance_clean, year,              "#BAB0AC", "Policy Year")
+fig_5_2 <- (p6 | p7) / (p8 | p9) +
+  plot_annotation(title = "Figure 5.2: Distribution of Risk and Geographic Characteristics",
+                  theme = theme(plot.title = element_text(size = 13, face = "bold")))
+
+p_dage <- insurance_clean %>%
+  ggplot(aes(x = driver_age, y = "Driver Age")) +
+  stat_halfeye(adjust = 0.5, width = 0.6, .width = 0, justification = -0.3,
+               point_colour = NA, fill = "#4E79A7", alpha = 0.7) +
+  geom_boxplot(width = 0.15, outlier.shape = NA, color = "grey30", fill = "white") +
+  stat_dots(side = "left", dotsize = 0.4, justification = 1.1,
+            binwidth = 0.8, overflow = "compress", color = "#4E79A7", alpha = 0.3) +
+  coord_flip() + labs(title = "Driver Age", x = "Age (Years)", y = NULL) +
+  theme_minimal(base_size = 11) + theme(plot.title = element_text(face = "bold"))
+
+p_vage <- insurance_clean %>%
+  ggplot(aes(x = vehicle_age, y = "Vehicle Age")) +
+  stat_halfeye(adjust = 0.5, width = 0.6, .width = 0, justification = -0.3,
+               point_colour = NA, fill = "#F28E2B", alpha = 0.7) +
+  geom_boxplot(width = 0.15, outlier.shape = NA, color = "grey30", fill = "white") +
+  stat_dots(side = "left", dotsize = 0.4, justification = 1.1,
+            binwidth = 0.8, overflow = "compress", color = "#F28E2B", alpha = 0.3) +
+  coord_flip() + labs(title = "Vehicle Age", x = "Age (Years)", y = NULL) +
+  theme_minimal(base_size = 11) + theme(plot.title = element_text(face = "bold"))
+
+fig_5_3 <- p_dage / p_vage +
+  plot_annotation(
+    title    = "Figure 5.3: Distribution of Driver Age and Vehicle Age",
+    subtitle = "Raincloud plots combining half-density, boxplot, and raw data dot strip",
+    theme    = theme(plot.title    = element_text(size = 13, face = "bold"),
+                     plot.subtitle = element_text(size = 10)))
+
+p_prem <- gghistostats(
+  data = insurance_clean, x = total_premium, xlab = "Total Premium (€)",
+  title = "Distribution of Total Premium", fill.color = "#4E79A7",
+  normal.curve = TRUE, normal.curve.args = list(color = "darkred", linewidth = 1))
+
+p_lr_claims <- gghistostats(
+  data = insurance_clean %>% filter(loss_ratio > 0, loss_ratio <= p95_lr),
+  x = loss_ratio, xlab = "Loss Ratio (claims-positive, capped at 95th percentile)",
+  title = "Loss Ratio — Claims-Positive Policies", fill.color = "#E15759",
+  normal.curve = TRUE, normal.curve.args = list(color = "darkred", linewidth = 1))
+
+fig_5_4 <- (p_prem | p_lr_claims) +
+  plot_annotation(title = "Figure 5.4: Distributional Analysis of Total Premium and Loss Ratio",
+                  theme = theme(plot.title = element_text(size = 13, face = "bold")))
+
+p_policy_type <- ggbetweenstats(
+  data = lr_data, x = policy_type, y = loss_ratio, type = "nonparametric",
+  title = "Loss Ratio by Policy Type", xlab = "Policy Type", ylab = "Loss Ratio",
+  pairwise.display = "significant", p.adjust.method = "bonferroni"
+) + coord_cartesian(ylim = c(0, 10))
+
+p_business_type <- ggbetweenstats(
+  data = lr_data, x = business_type, y = loss_ratio, type = "nonparametric",
+  title = "Loss Ratio by Business Type", xlab = "Business Type", ylab = "Loss Ratio"
+) + coord_cartesian(ylim = c(0, 10))
+
+fig_6_1 <- (p_policy_type | p_business_type) +
+  plot_annotation(title = "Figure 6.1: Loss Ratio by Policy Type and Business Type",
+                  theme = theme(plot.title = element_text(size = 13, face = "bold")))
+
+p6_2a <- ggbetweenstats(
+  data = lr_data, x = bonus_score, y = loss_ratio, type = "nonparametric",
+  pairwise.comparisons = TRUE, pairwise.display = "significant",
+  p.adjust.method = "bonferroni", title = "Loss Ratio by Bonus Score",
+  xlab = "Bonus Score", ylab = "Loss Ratio",
+  package = "RColorBrewer", palette = "Set2",
+  violin.args = list(width = 0.6, alpha = 0.3),
+  point.args = list(alpha = 0.05, size = 0.8),
+  centrality.point.args = list(size = 4), ggtheme = theme_minimal(base_size = 11)
+) + coord_cartesian(ylim = c(0, 10)) +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5),
+        plot.margin = margin(t = 10, r = 10, b = 20, l = 10))
+
+p6_2b <- ggbetweenstats(
+  data = lr_data, x = circulation_area, y = loss_ratio, type = "nonparametric",
+  pairwise.comparisons = TRUE, pairwise.display = "significant",
+  p.adjust.method = "bonferroni", title = "Loss Ratio by Circulation Area",
+  xlab = "Circulation Area", ylab = "Loss Ratio",
+  package = "RColorBrewer", palette = "Set3",
+  violin.args = list(width = 0.6, alpha = 0.3),
+  point.args = list(alpha = 0.05, size = 0.8),
+  centrality.point.args = list(size = 4), ggtheme = theme_minimal(base_size = 11)
+) + coord_cartesian(ylim = c(0, 10)) +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5),
+        plot.margin = margin(t = 10, r = 10, b = 20, l = 10))
+
+fig_6_2 <- p6_2a / p6_2b +
+  plot_layout(heights = c(1, 1)) +
+  plot_annotation(
+    title   = "Figure 6.2: Loss Ratio by Bonus Score and Circulation Area",
+    caption = "Claims-positive policies, loss ratio capped at 95th percentile (19.48)\nKruskal-Wallis; post-hoc Dunn with Bonferroni correction",
+    theme   = theme(plot.title   = element_text(face = "bold", size = 13, hjust = 0.5),
+                    plot.caption = element_text(size = 9, colour = "grey50")))
+
+p6_3a <- ggscatterstats(
+  data = lr_data, x = driver_age, y = loss_ratio, type = "nonparametric",
+  marginal = FALSE, title = "Driver Age vs Loss Ratio",
+  xlab = "Driver Age (years)", ylab = "Loss Ratio",
+  point.args = list(alpha = 0.05, size = 0.8, colour = "steelblue"),
+  smooth.line.args = list(method = "lm", colour = "firebrick", se = TRUE),
+  ggtheme = theme_minimal(base_size = 11)
+) + coord_cartesian(ylim = c(0, 10)) +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5))
+
+p6_3b <- ggscatterstats(
+  data = lr_data, x = vehicle_age, y = loss_ratio, type = "nonparametric",
+  marginal = FALSE, title = "Vehicle Age vs Loss Ratio",
+  xlab = "Vehicle Age (years)", ylab = "Loss Ratio",
+  point.args = list(alpha = 0.05, size = 0.8, colour = "steelblue"),
+  smooth.line.args = list(method = "lm", colour = "firebrick", se = TRUE),
+  ggtheme = theme_minimal(base_size = 11)
+) + coord_cartesian(ylim = c(0, 10)) +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5))
+
+p6_3c <- ggscatterstats(
+  data = lr_data, x = vehicle_value, y = loss_ratio, type = "nonparametric",
+  marginal = FALSE, title = "Vehicle Value vs Loss Ratio",
+  xlab = "Vehicle Value", ylab = "Loss Ratio",
+  point.args = list(alpha = 0.05, size = 0.8, colour = "steelblue"),
+  smooth.line.args = list(method = "lm", colour = "firebrick", se = TRUE),
+  ggtheme = theme_minimal(base_size = 11)
+) + coord_cartesian(ylim = c(0, 10)) +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5))
+
+fig_6_3 <- (p6_3a / p6_3b / p6_3c) +
+  plot_annotation(
+    title   = "Figure 6.3: Loss Ratio vs Continuous Risk Variables",
+    caption = "Claims-positive policies, loss ratio capped at 95th percentile (19.48)\nSpearman rank correlation; n = 40,149",
+    theme   = theme(plot.title   = element_text(face = "bold", size = 13, hjust = 0.5),
+                    plot.caption = element_text(size = 9, colour = "grey50")))
+
+fig_6_4 <- ggpairs(
+  lr_pairs,
+  columnLabels = c("Driver Age","Vehicle Age","Vehicle Value","Total Premium","Loss Ratio"),
+  upper = list(continuous = wrap("cor", method = "spearman", size = 4)),
+  lower = list(continuous = wrap("smooth", alpha = 0.02, size = 0.3, method = "lm")),
+  diag  = list(continuous = wrap("densityDiag", fill = "steelblue", alpha = 0.4)),
+  progress = FALSE
+) +
+  labs(title   = "Figure 6.4: Correlation Matrix of Continuous Risk Variables",
+       caption = "Spearman rank correlation; claims-positive policies capped at 95th percentile") +
+  theme_minimal(base_size = 10) +
+  theme(plot.title   = element_text(face = "bold", size = 13, hjust = 0.5),
+        plot.caption = element_text(size = 9, colour = "grey50"),
+        strip.text   = element_text(face = "bold", size = 9))
+
+fig_bonus <- lr_data |>
+  mutate(year = factor(year)) |>
+  ggplot(aes(x = loss_ratio, y = year, fill = year, colour = year)) +
+  geom_density_ridges(alpha = 0.6, scale = 0.8, rel_min_height = 0.01, bandwidth = 0.15) +
+  scale_x_continuous(limits = c(0, 10), breaks = seq(0, 10, by = 2)) +
+  scale_fill_viridis_d(option = "mako", direction = -1) +
+  scale_colour_viridis_d(option = "mako", direction = -1) +
+  labs(title = "Figure B.1: Loss Ratio Distribution by Policy Year",
+       x = "Loss Ratio", y = "Policy Year",
+       caption = "Claims-positive policies, loss ratio capped at 95th percentile (19.48)") +
+  theme_minimal(base_size = 12) +
+  theme(plot.title = element_text(face = "bold", size = 13, hjust = 0.5),
+        plot.caption = element_text(size = 9, colour = "grey50"),
+        legend.position = "none")
+```
+
+## The Study {.smaller}
+
+**Motor insurance portfolio · Spanish non-life insurer · 2022–2024**
+
+::::: columns
+::: {.column width="50%"}
+**354,091** policies · 47 variables
+:::
+
+::: {.column width="50%"}
+**17 variables** selected for analysis
+:::
+:::::
+
+<br>
+
+| Objective | Method |
+|------------------------------------|------------------------------------|
+| Understand portfolio composition | Univariate Exploratory Data Analysis (EDA) |
+| Identify profitability drivers | Bivariate inferential analysis |
+| Validate risk factor associations | Non-parametric statistics |
+
+::: notes
+Spanish motor insurance portfolio, 2022–2024. Two objectives: understand portfolio composition via univariate EDA, then identify which risk factors statistically influence loss ratio (total incurred ÷ total premium) via bivariate analysis. Non-parametric tests applied throughout — justified by confirmed non-normality.
+:::
+
+## Data Preparation {.smaller}
+
+::: incremental
+- **Import fix:** `read_delim()` with `locale(decimal_mark = ".")` — `read_csv2()` inflated premiums by misreading decimal points as thousands separators
+- **Missing values:** 4 variables affected (largest: `fuel_type`, 0.36%) — retained as `NA`; no imputation
+- **Variable selection:** 17 of 47 retained; coverage-level breakdowns excluded
+- **Factor recoding:** 9 categorical variables relabelled from raw codes
+- **Loss ratio:** `total_incurred / total_premium`; zero-premium and zero-exposure records excluded
+:::
+
+::: notes
+Key pipeline decision: the decimal parsing bug inflated €279 premiums into trillions, making all financial columns unusable. Explicit locale specification fixed this. Missing values are too small to impute meaningfully. Loss ratio derivation removes 49 invalid records.
+:::
+
+## Portfolio Composition
+
+```{r}
+#| fig-width: 12
+#| fig-height: 6.8
+fig_5_1
+```
+
+::: notes
+Third-party Combined dominates (57.8%). New Business at 69.3% signals active growth. Critically, 96.4% carry Good bonus score — extreme homogeneity that will limit its discriminatory power in Section 6.
+:::
+
+## Risk & Geographic Characteristics
+
+```{r}
+#| fig-width: 11
+#| fig-height: 6.5
+fig_5_2
+```
+
+::: notes
+Diesel 63.9%; Inland 64.6%. Circulation area near-even split (Urban 53.8% vs Rural 46.2%). Policy year skewed to 2024 (47.5%) — portfolio growth, and a key caveat for temporal loss ratio comparisons due to claims development lag.
+:::
+
+## Driver & Vehicle Age Distributions
+
+```{r}
+#| fig-width: 10
+#| fig-height: 6.5
+fig_5_3
+```
+
+::: notes
+Driver age centres in the late 40s; near-absence below 25 reflects high youth premiums. Vehicle age median \~25 years with a long right tail — ageing fleet with total loss implications. Similarity in shapes hints at the multicollinearity later confirmed at ρ = 0.858.
+:::
+
+## Loss Ratio Distribution
+
+```{r}
+#| fig-width: 12
+#| fig-height: 6
+fig_5_4
+```
+
+::: notes
+Total premium: mean €296.76, right-skewed. Only 11.9% of policies recorded a claim; mean loss ratio among claimants = 3.23. Both plots depart strongly from the normal curve — confirming non-normality and justifying non-parametric tests throughout Section 6.
+:::
+
+## Policy Type & Business Type vs Loss Ratio
+
+```{r}
+#| fig-width: 14
+#| fig-height: 6.5
+fig_6_1
+```
+
+::: notes
+Policy type: KW χ²(4) = 494.95, p \< 0.001. Third-party only highest median (4.56); Comprehensive lowest (1.85–1.88). New business \> renewals (2.29 vs 2.01, p \< 0.001) — adverse selection: new customers carry undisclosed risk not yet reflected in pricing.
+:::
+
+## Bonus Score & Circulation Area vs Loss Ratio
+
+```{r}
+#| fig-width: 9
+#| fig-height: 6.8
+fig_6_2
+```
+
+::: notes
+Counter-intuitive: Good score holders have the highest median loss ratio (2.19) — premium denominator effect; no-claims discounts compress premiums, inflating the ratio. Group imbalance: Good n = 38,154 vs Bad n = 883. Circulation area: negligible effect size despite statistical significance.
+:::
+
+## Continuous Risk Variables vs Loss Ratio
+
+```{r}
+#| fig-width: 9
+#| fig-height: 7.2
+fig_6_3
+```
+
+::: notes
+Driver age (ρ = 0.02) and vehicle age (ρ = 0.01): near-zero — flat regression lines confirm these are ineffective predictors in isolation. Vehicle value (ρ = −0.10): only meaningful predictor — higher-value vehicles attract larger premiums, compressing loss ratio via the denominator.
+:::
+
+## Correlation Matrix
+
+```{r}
+#| fig-width: 11
+#| fig-height: 7
+fig_6_4
+```
+
+::: notes
+Key findings: driver age × vehicle age ρ = 0.858 — severe multicollinearity, cannot be used as independent predictors. Total premium is the strongest loss ratio predictor (ρ = −0.321) — denominator mechanism. Vehicle value: ρ = −0.101. Heavy right-skew confirmed across all three financial variables.
+:::
+
+## Temporal Trends — Loss Ratio by Year
+
+```{r}
+#| fig-width: 10
+#| fig-height: 6.5
+fig_bonus
+```
+
+::: notes
+2024 sharp peak near zero is claims development lag — not genuine improvement. 2022 flattest and most spread — most mature cohort. Cross-year comparisons must account for development maturity; apparent improvement in recent years reflects run-off patterns, not profitability gains.
+:::
+
+## Key Takeaways {.smaller}
+
+::::: columns
+::: {.column width="50%"}
+**What drives loss ratio**
+
+🔴 **Policy type** — dominant driver; Third-party only: 4.56, Comprehensive: 1.85–1.88
+
+🔴 **New business** \> renewals (2.29 vs 2.01) — adverse selection
+
+🟡 **Total premium** strongest continuous predictor (ρ = −0.321) — denominator effect
+
+🟡 **Vehicle value** meaningful negative association (ρ = −0.101)
+:::
+
+::: {.column width="50%"}
+**What does not drive loss ratio**
+
+⚪ Driver age (ρ ≈ 0.02) · Vehicle age (ρ ≈ 0.01) · Circulation area (negligible effect)
+
+**⚠️ Multicollinearity**
+
+Driver age × Vehicle age: ρ = 0.858 — cannot be treated as independent predictors
+
+**⚠️ Claims development lag**
+
+2024 loss ratios are understated — interpret temporal trends with caution
+:::
+:::::
+
+> Portfolio profitability is shaped by **coverage structure and premium adequacy** — not individual policyholder characteristics alone.
+
+::: notes
+Loss ratio is driven primarily by policy structure and premium adequacy. Coverage type and premium level are the most actionable levers. Demographic and vehicle variables add limited marginal information. Two structural alerts for any downstream modelling: multicollinearity between driver and vehicle age, and claims development lag distorting recent-year comparisons.
+:::

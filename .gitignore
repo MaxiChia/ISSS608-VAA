@@ -1,0 +1,13 @@
+.Rproj.user
+.Rhistory
+.RData
+.httr-oauth
+.DS_Store
+.quarto
+
+/.quarto/
+**/*.quarto_ipynb
+.positai
+Take-Home_Exercise/Take-Home_Exercise02/data/raw/mc2_df.rds
+Take-Home_Exercise/Take-Home_Exercise02/data/raw/MC2 data.json
+Take-Home_Exercise/Take-Home_Ex01/data/motor_insurance.csv

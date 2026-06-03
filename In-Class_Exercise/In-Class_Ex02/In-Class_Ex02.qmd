@@ -1,0 +1,13 @@
+---
+title: "In-Class Exercise 02"
+author: "Albert Chia"
+execute:
+  eval: true
+  echo: true
+  warning: false
+  freeze: true
+---
+
+![](images/clipboard-4288353861.jpeg)
+
+[In-Class_Ex02](https://public.tableau.com/app/profile/albert.chia/viz/In-Class_Ex02_17771004907240/Dashboard1)
