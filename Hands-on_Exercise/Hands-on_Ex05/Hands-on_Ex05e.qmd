@@ -94,7 +94,11 @@ The code chunk above is not very efficient because we have to give each intermed
 
 ### 3.4 Group Summaries with the `Pipe`
 
-The code chunk below shows a more efficient way to tackle the same processes by using the `pipe`, %\>%: ::: callout-note \## Recommendation To learn more about pipe, visit this excellent article: [Pipes in R Tutorial For Beginners](https://www.datacamp.com/community/tutorials/pipe-r-tutorial). :::
+The code chunk below shows a more efficient way to tackle the same processes by using the `pipe`, %\>%: 
+
+::: callout-note 
+## Recommendation To learn more about pipe, visit this excellent article: [Pipes in R Tutorial For Beginners](https://www.datacamp.com/community/tutorials/pipe-r-tutorial). 
+:::
 
 ```{r}
 realis2018_summarised <- realis2018 %>% 

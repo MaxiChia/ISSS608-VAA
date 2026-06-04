@@ -1,7 +1,7 @@
 ---
 title: "Hands-On Exercise 7a"
 author: "Albert Chia"
-date: "May 14, 2026"
+date: "Jun 2, 2026"
 date-modified: "last-modified"
 execute:
   eval: true
@@ -190,7 +190,8 @@ As in all network graph, there are three main aspects to a **ggraph**'s network 
 
 For a comprehensive discussion of each of these aspect of graph, please refer to their respective vignettes provided. 
 
-:::: panel-tabset
+:::: {.panel-tabset}
+
 ### 5.1 Basic Network Graph
 The code chunk below uses [ggraph()](https://ggraph.data-imaginist.com/reference/ggraph.html), [geom_edge_link()](https://ggraph.data-imaginist.com/reference/geom_edge_link.html) and [geom_node_point()](https://ggraph.data-imaginist.com/reference/geom_node_point.html) to plot a network graph by using *GAStech_graph*. Before you get started, it is advisable to read their respective reference guide at least once.  
 ```{r}
@@ -349,7 +350,7 @@ There are three functions in ggraph to implement faceting:
 - [facet_edges()](https://ggraph.data-imaginist.com/reference/facet_edges.html) whereby nodes are always drawn in a panels even if the node data contains an attribute named the same as the one used for the edge facetting 
 - [facet_graph()](https://ggraph.data-imaginist.com/reference/facet_graph.html) faceting on two variables simultaneously
 
-:::: panel-tabset
+:::: {.panel-tabset}
 ### 6.1 *facet_edges()*
 ```{r}
 #| label: network-facet_edges
@@ -449,7 +450,7 @@ Centrality measures are a collection of statistical indices used to describe the
 ### 7.2 Visualising Centrality Measures
 Besides betweenness centrality, other centrality measures can also be used to examine the relative importance of nodes in the network. In this section, four centrality measures are compared: betweenness, degree, closeness and eigenvector centrality.
 
-:::: panel-tabset
+:::: {.panel-tabset}
 
 #### Betweenness Centrality
 
@@ -548,7 +549,8 @@ g + theme_graph() +
 ### 7.3 Visualising Community
 tidygraph package inherits many of the community detection algorithms into igraph and makes them available to us, including *Edge-betweenness (group_edge_betweenness)*, *Leading eigenvector (group_leading_eigen)*, *Fast-greedy (group_fast_greedy)*, *Louvain (group_louvain)*, *Walktrap (group_walktrap)*, *Label propagation (group_label_prop)*, *InfoMAP (group_infomap)*, *Spinglass (group_spinglass)*, and *Optimal (group_optimal)*. Some community algorithms are designed to take into account direction or weight, while others ignore it. Click this [link](https://tidygraph.data-imaginist.com/reference/group_graph.html) to find out more about community detection functions provided by tidygraph. 
 
-:::: panel-tabset
+:::: {.panel-tabset}
+
 ####  *group_edge_betweenness()*
 ```{r}
 #| label: community-group_edge_betweenness
@@ -652,7 +654,8 @@ visNetwork(GAStech_nodes,
            GAStech_edges_aggregated)
 ```
 
-:::: panel-tabset
+:::: {.panel-tabset}
+
 ### 8.3 With layout
 Fruchterman and Reingold layout is used. 
 ```{r}
@@ -725,4 +728,5 @@ visNetwork(GAStech_nodes,
   visLayout(randomSeed = 123)
 ```
 Visit [Option](http://datastorm-open.github.io/visNetwork/options.html) to find out more about visOption's argument. 
+
 ::::
