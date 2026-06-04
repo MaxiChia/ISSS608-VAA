@@ -8,6 +8,9 @@ body {
 /* Inline code styling */
 code {
   color: purple;
+  font-size: 1em;
+  background: transparent;
+  padding: 0;
 }
 
 /* Hero section */
