@@ -16,6 +16,7 @@ format:
     code-fold: true
     code-summary: "Show code"
 ---
+
 ```{=html}
 <style>
   code {
@@ -41,11 +42,11 @@ Visual analytics — the integration of data visualisation, statistical reasonin
 
 This study applies visual analytics techniques in R to TenantThread's multi-agent event log, spanning 8 May to 16 Jul 2046.
 
-The specific objectives are: 
+The specific objectives are:
 
-**1. Reconstruct the Incident**: (a) Identify the detailed chain of events that led to the anomalous SaidIT post, and (b) map the system architecture within which it occurred. 
+**1. Reconstruct the Incident**: (a) Identify the detailed chain of events that led to the anomalous SaidIT post, and (b) map the system architecture within which it occurred.
 
-**2. Decode the Content**: Determine what the anomalous post contains and trace the origin of its content within TenantThread's file and agent activity logs. 
+**2. Decode the Content**: Determine what the anomalous post contains and trace the origin of its content within TenantThread's file and agent activity logs.
 
 **3. Prevent Recurrence**: (a) Identify whether similar anomalous behaviour has occurred previously in the log, and (b) propose a single, well-defined intervention point to prevent future occurrences.
 
@@ -223,10 +224,7 @@ mc2_df |>
 
 To reconstruct how the anomalous SaidIT post came to exist on May 17, 2046, we begin by establishing what normal posting activity looks like in this system, and then systematically identify where the May 17 event deviates from it.
 
-The event log contains three posting-related event types that are directly relevant to this investigation: 
-- **`post_saidit`** - the instruction event, where a human or agent requests that a post be made on SaidIT. 
-- **`saidit_post`** - the confirmation event, where the system logs that a post was actually published on the forum. This event contains the `content` and `content_source` fields that tell us *what* was posted and *where it came from*. 
-- **`saidit_post_check`** - a verification event that confirms whether the post was successfully made.
+The event log contains three posting-related event types that are directly relevant to this investigation: - **`post_saidit`** - the instruction event, where a human or agent requests that a post be made on SaidIT. - **`saidit_post`** - the confirmation event, where the system logs that a post was actually published on the forum. This event contains the `content` and `content_source` fields that tell us *what* was posted and *where it came from*. - **`saidit_post_check`** - a verification event that confirms whether the post was successfully made.
 
 We focus our analysis on **`saidit_post`** because it is the only event that carries direct evidence of what was published — specifically the `content` and `content_source` fields. An anomaly in `saidit_post` means something abnormal was actually posted, not merely attempted. This makes it the most forensically relevant event type.
 
@@ -849,6 +847,7 @@ geom_edge_link(
 :::
 
 ### 6.4 Tracing the Origin of Post Content
+
 Each anomalous post sourced its content through the `content_source` field rather than the normal file pathway — `HiddenOrca.txt` on May 10, `MellowOtter.txt` on May 11, and `SwiftWren.txt` on May 17. To determine where these files originated within TenantThread's system, two searches are performed against the full event log. The first checks whether any `read_file` event was executed by an actor carrying these filenames in their parties record. The second checks whether these filenames appear anywhere in the `file` field across all event types. If either search returns results, the files can be traced to a registered system action. If both return zero rows, the files existed entirely outside the logged audit trail.
 
 ```{r}
@@ -902,7 +901,8 @@ if (nrow(search2) == 0) {
 ```
 
 ::: callout-note
-##  Observations — Content Origin Search
+## Observations — Content Origin Search
+
 - Both searches return zero rows. The filenames `HiddenOrca.txt`, `MellowOtter.txt`, and `SwiftWren.txt` do not appear anywhere in `mc2_df` outside of the `content_source` field at the moment of posting. They are never registered as file objects, never explicitly read under their own names, and never referenced in any other logged system action across the full event log spanning May to July 2046.
 
 - The content origin is unrecoverable by design. The files were never formally created, stored, or accessed through any auditable pathway within TenantThread's system. Whatever mechanism introduced them into the `content_source` field left no traceable record. This is not a gap in the investigation - it is the forensic conclusion. The operation was deliberately structured to ensure the content source could not be reconstructed after the fact.
@@ -911,7 +911,8 @@ if (nrow(search2) == 0) {
 :::
 
 ::: callout-warning
-##  Caveat — Question 2 Partially Unanswerable
+## Caveat — Question 2 Partially Unanswerable
+
 The VAST Challenge MC2 Task 2 asks what the posts "mean" and where their content originates. The available data does not contain the text of the posts, and the source files exist nowhere in the event log outside the `content_source` field. The forensic conclusion - that the content was deliberately kept off the audit trail - is itself the answer to the origin question. The meaning of the content remains outside the scope of what `mc2_df` can establish.
 :::
 
@@ -1144,14 +1145,23 @@ ggraph(relay_graph, layout = "linear") +
 - **Figure 7.2d shows 10 delegation events**, tracing the full relay chain from its earliest visible actor to the terminal executor. Read chronologically, the sequence is:
 
 - 00:51:43 `james_stern` → `gabriel_sonar` (read_file)
-- 02:26:11 `gabriel_sonar` → `daniel_gangway` (read_file) 
-- 04:12:32 `daniel_gangway` → `zoey_drydock` (read_file) 
-- 05:34:32 `zoey_drydock` → `mia_fender` (read_file) 
-- 05:52:51 `mia_fender` → `victoria_rigging` (read_file) 
-- 06:44:28 `victoria_rigging` → `zoey_drydock` (read_file) 
-- 08:16:07 `zoey_drydock` → `lily_anchorline` (read_file) 
-- 10:11:31 `lily_anchorline` → `daniel_gangway` (read_file) 
-- 11:12:24 `daniel_gangway` → `chloe_ballast` (read_file) 
+
+- 02:26:11 `gabriel_sonar` → `daniel_gangway` (read_file)
+
+- 04:12:32 `daniel_gangway` → `zoey_drydock` (read_file)
+
+- 05:34:32 `zoey_drydock` → `mia_fender` (read_file)
+
+- 05:52:51 `mia_fender` → `victoria_rigging` (read_file)
+
+- 06:44:28 `victoria_rigging` → `zoey_drydock` (read_file)
+
+- 08:16:07 `zoey_drydock` → `lily_anchorline` (read_file)
+
+- 10:11:31 `lily_anchorline` → `daniel_gangway` (read_file)
+
+- 11:12:24 `daniel_gangway` → `chloe_ballast` (read_file)
+
 - 11:21:13 `chloe_ballast` → `john_windward` (read_file) → **anomalous post**
 
 - Two actors appear at more than one position in the chain. `daniel_gangway` receives a task from `gabriel_sonar` at `02:26:11`, issues one to `zoey_drydock` at `04:12:32`, receives again from `lily_anchorline` at `10:11:31`, and issues again to `chloe_ballast` at `11:12:24`. `zoey_drydock` similarly receives from `daniel_gangway` at `04:12:32`, issues to `mia_fender` at `05:34:32`, receives again from `victoria_rigging` at `06:44:28`, and issues again to `lily_anchorline` at `08:16:07`. This is not a simple linear relay — the same agents are reused at non-adjacent positions, meaning a back-trace that stops when it first encounters a known actor will terminate prematurely and misidentify that actor as the originator.
@@ -1333,11 +1343,14 @@ ggplotly(p, tooltip = "text") %>%
 - **`james_stern` and `gabriel_sonar` each have only one event visible**, both delegations, with no post-check signature. Whether this reflects a different role in the operation or simply a gap in the available log cannot be determined from the current evidence.
 :::
 
-##  8. Historical Anomalies - Recurrence Analysis
+## 8. Historical Anomalies - Recurrence Analysis
+
 Section 5 established that three anomalous `saidit_post` events exist in the dataset — `HiddenOrca.txt` (May 10), `MellowOtter.txt` (May 11), and `SwiftWren.txt` (May 17). Section 7 reconstructed the full chain behind the May 17 incident in detail. Before proposing an intervention, a critical question must be answered: were these three incidents independent occurrences, or manifestations of the same coordinated operation? This section examines two dimensions of recurrence — actor participation across all three dates, and the behavioural signature at the terminal executor — to determine whether a common underlying operation connects them.
 
 ### 8.1 Actor Participation Across Incidents
+
 The first dimension of recurrence examined is actor participation. If the same agents appear across all three incidents, it suggests a shared network rather than three independent chains. All `queue_subordinate_task` (read_file) delegation events on each incident date are extracted up to the moment of the anomalous post, and the unique actors across issuer and receiver roles are identified. Figure 8.1 presents the result as a heatmap — actors on the y-axis ordered by number of incidents they appear in, incident dates on the x-axis — making the overlap immediately visible.
+
 ```{r}
 #| label: recurrence-heatmap
 #| code-fold: true
@@ -1422,8 +1435,9 @@ ggplot(heatmap_data,
     legend.position = "bottom"
   )
 ```
+
 ::: callout-note
-##  Observations — Actor Participation Across Three Anomalous Incidents
+## Observations — Actor Participation Across Three Anomalous Incidents
 
 - **Figure 8.1 confirms that the three anomalous incidents are not isolated events** — they share a persistent core of actors across all three dates. Six actors appear in every incident: `victoria_rigging`, `mia_fender`, `lily_anchorline`, `john_windward`, `daniel_gangway`, and `chloe_ballast.` Their presence across May 10, May 11, and May 17 is inconsistent with coincidence and consistent with a coordinated, repeated operation using the same underlying network.
 
@@ -1437,7 +1451,9 @@ ggplot(heatmap_data,
 :::
 
 ### 8.2 Behaviour Signature at the Terminal Node
+
 Actor overlap alone does not prove the incidents share the same operation — the same agents could participate in unrelated chains. The stronger test is whether the same behavioural sequence executes at the terminal node each time. Section 7 established that on May 17, `john_windward` executed a precise four-event sequence — `saidit_post_check` → `saidit_post` → `delete_file` → `delete_file` — at one-second intervals, with post content delivered exclusively through the `content_source` field rather than the normal file pathway. Figure 8.2 examines whether this identical sequence repeats on May 10 and May 11, normalising each incident to the moment the post check fires to make the timing directly comparable.
+
 ```{r}
 #| label: terminal-sequence-plot
 #| code-fold: true
@@ -1538,48 +1554,54 @@ ggplot(sequence_data,
     legend.position = "bottom"
   )
 ```
+
 ::: callout-note
-##  Observations — Behavioural Signature at the Terminal Node
+## Observations — Behavioural Signature at the Terminal Node
 
 - **Figure 8.2 confirms that the identical four-event sequence** — `saidit_post_check` → `saidit_post` → `delete_file` → `delete_file` — executes at one-second intervals across all three incidents, attributed to `john_windward` each time. The post check fires at `12:45:41` on May 10, `00:56:03` on May 11, and 11:21:14 on May 17 — three different times of day, but the same scripted sequence in each case.
 
-- **The `content_source` field is the exclusive delivery mechanism in all three incidents. The `file` field is `NA` in every `saidit_post` event — `HiddenOrca.txt`, `MellowOtter.txt`, and `SwiftWren.txt` are each delivered through `content_source` only, bypassing the normal file registration pathway and evading standard file-based audit controls each time.
+- \*\*The `content_source` field is the exclusive delivery mechanism in all three incidents. The `file` field is `NA` in every `saidit_post` event — `HiddenOrca.txt`, `MellowOtter.txt`, and `SwiftWren.txt` are each delivered through `content_source` only, bypassing the normal file registration pathway and evading standard file-based audit controls each time.
 
-- **The precision of the one-second interval timing across three separate dates rules out manual action. A human operator could not reproduce this exact sequence and timing consistently across incidents separated by days. The terminal sequence is scripted — the same protocol executing at the same node, on instruction, each time it is triggered.
+- \*\*The precision of the one-second interval timing across three separate dates rules out manual action. A human operator could not reproduce this exact sequence and timing consistently across incidents separated by days. The terminal sequence is scripted — the same protocol executing at the same node, on instruction, each time it is triggered.
 
 - Taken together, Figures 8.1 and 8.2 establish that the three anomalous incidents are not independent events. They share a stable core actor network, a fixed terminal executor, an identical delivery mechanism, and a scripted terminal sequence. This is a single coordinated operation that has executed at least three times.
 :::
 
 ::: callout-warning
-##  Unresolved Anomaly — Sustained Virus Activity on `zoey_drydock` 
-- During the course of data preparation for Section 8, a separate anomaly was observed in the event log. Starting May 10 at `20:10:04` — immediately following the conclusion of the first anomalous posting incident — `zoey_drydock` is the subject of hundreds of `queue_subordinate_task` events with `task = "virus"`, continuing at five-second intervals through May 11. Over 2,800 such events are recorded across the two 
+## Unresolved Anomaly — Sustained Virus Activity on `zoey_drydock`
+
+- During the course of data preparation for Section 8, a separate anomaly was observed in the event log. Starting May 10 at `20:10:04` — immediately following the conclusion of the first anomalous posting incident — `zoey_drydock` is the subject of hundreds of `queue_subordinate_task` events with `task = "virus"`, continuing at five-second intervals through May 11. Over 2,800 such events are recorded across the two
 
 - This activity was not investigated as part of this study, which is scoped to the three anomalous `saidit_post` incidents and their associated delegation chains. However, given that `zoey_drydock` is a confirmed participant in the May 11 and May 17 posting chains, the overlap between her posting chain involvement and this sustained virus activity is noted as a significant unresolved anomaly warranting separate investigation.
 :::
 
-##  9.  Intervention Proposal
-The investigation across Sections 7 & 8 has established that three anomalous `saidit_post` events were executed by the same terminal actor, using the same delivery mechanism, through the same validation gate, on three separate dates. In every case, the existing `saidit_post_check` fired one second before the post was posted, yet failed to prevent it. The checks are not absent, just not enough. The gap is specific and identifiable - the existing validation does not evaluate the `content_source` field, allowing post content to bypass audit controls. This section proposes a single, well-defined intervention at the point wheere the existing gate already sits, requiring no new infrastructure but only additional condition on the check that is already in place. 
+## 9. Intervention Proposal
+
+The investigation across Sections 7 & 8 has established that three anomalous `saidit_post` events were executed by the same terminal actor, using the same delivery mechanism, through the same validation gate, on three separate dates. In every case, the existing `saidit_post_check` fired one second before the post was posted, yet failed to prevent it. The checks are not absent, just not enough. The gap is specific and identifiable - the existing validation does not evaluate the `content_source` field, allowing post content to bypass audit controls. This section proposes a single, well-defined intervention at the point wheere the existing gate already sits, requiring no new infrastructure but only additional condition on the check that is already in place.
 
 ### 9.1 The Vulnerability
-The existing `saidit_post_check` event is a validation gate that fires immediately before every `saidit_post` which is confirmed in all three incidents at `+0s`. Its presence in the log proves the gate is not absent. However, across all three anomalous posts, the check fired and passed without blocking the publication. The reason is structural as the existiing check evalueates whether a post can be made, but does not inspect **how** the post content arrived. Sepcificially, it does not evaluate the `content_source` field. 
 
-In a normal posting event, content is delivered through the registered file pathway - the `file` field carries the filename and the `content_source` field is `NA`. In all three anomalous posts, this is reversed, where `file` is `NA` and `content_source` carries the filename. This inversion is the signature of the exploit. Content delivered through `content_source` bypasses file registration, bypass file-based audit controls, and is invisible to any check that only evaulates the `file` field. 
+The existing `saidit_post_check` event is a validation gate that fires immediately before every `saidit_post` which is confirmed in all three incidents at `+0s`. Its presence in the log proves the gate is not absent. However, across all three anomalous posts, the check fired and passed without blocking the publication. The reason is structural as the existiing check evalueates whether a post can be made, but does not inspect **how** the post content arrived. Sepcificially, it does not evaluate the `content_source` field.
+
+In a normal posting event, content is delivered through the registered file pathway - the `file` field carries the filename and the `content_source` field is `NA`. In all three anomalous posts, this is reversed, where `file` is `NA` and `content_source` carries the filename. This inversion is the signature of the exploit. Content delivered through `content_source` bypasses file registration, bypass file-based audit controls, and is invisible to any check that only evaulates the `file` field.
 
 **The vulnerability is therefore not a missing gate but a missing condition within the gate that already exists.**
 
 ### 9.2 The Proposed Intervention
-The intervention requires adding a single condition to the existing `saidit_post_check` validation page: **If `content_source` is not null at the point of `saidit_post_check` -> block the post and raise an alert**
 
-This rule targets the exact inversion identified in Section 9.1. Under normal posting behaviour, `content_source` is always `NA` - a non-null value in this field is not a legitimate system state. It is unambiguously anomalous. The condition therefore carries no risk of false positives against normal posting operations. 
+The intervention requires adding a single condition to the existing `saidit_post_check` validation page: **If `content_source` is not null at the point of `saidit_post_check` -\> block the post and raise an alert**
 
-The intervention sits at the existing gate with no new infrastructure, no new event type, and no changes to the delegation or file syustem architecture are required. The `saidit_post_check` already executes at the right moment (one second after every post). Adding `content_source` null-check to its evaluation logic is sufficient to intercept the operation at the point it has consistently exploited across all three incidents. 
+This rule targets the exact inversion identified in Section 9.1. Under normal posting behaviour, `content_source` is always `NA` - a non-null value in this field is not a legitimate system state. It is unambiguously anomalous. The condition therefore carries no risk of false positives against normal posting operations.
 
-Had this condition been active on May 10, May 11, and May 17, all three anomalous posts would have been blocked at `+0s`, before the post fired, before the deletions executed, and before the content was published. The one-second window between the check and the post is preceisely where the intervention takes effect. 
+The intervention sits at the existing gate with no new infrastructure, no new event type, and no changes to the delegation or file syustem architecture are required. The `saidit_post_check` already executes at the right moment (one second after every post). Adding `content_source` null-check to its evaluation logic is sufficient to intercept the operation at the point it has consistently exploited across all three incidents.
 
-The proposed rule does not resolve the upstream delegation chain, identify the true originator, or prevent the relay from assembling. It closes the specific gap that allowed the terminal executor to publish - *which is the single intervention point Objective 3b requires*. 
+Had this condition been active on May 10, May 11, and May 17, all three anomalous posts would have been blocked at `+0s`, before the post fired, before the deletions executed, and before the content was published. The one-second window between the check and the post is preceisely where the intervention takes effect.
+
+The proposed rule does not resolve the upstream delegation chain, identify the true originator, or prevent the relay from assembling. It closes the specific gap that allowed the terminal executor to publish - *which is the single intervention point Objective 3b requires*.
 
 ### 9.3 Visual - Intervention at the Validation Gate
-Figure 9.1 presents the posting sequence as a before and after process flow. The left panel shows the current state, where the existing `saidit_post_check` passes without evaluating `content_source`, allowing the anomalous post to proceed. The right panel shows the proposed state, where a single additional condition blocks any post where `content_source` is no null, raising an alert before publication occurs. 
+
+Figure 9.1 presents the posting sequence as a before and after process flow. The left panel shows the current state, where the existing `saidit_post_check` passes without evaluating `content_source`, allowing the anomalous post to proceed. The right panel shows the proposed state, where a single additional condition blocks any post where `content_source` is no null, raising an alert before publication occurs.
 
 ```{r}
 #| label: intervention-flow-ggplot
@@ -1697,7 +1719,7 @@ left + right +
 ```
 
 ::: callout-note
-##  Observations — Intervention at the Validation Gate
+## Observations — Intervention at the Validation Gate
 
 - **Figure 9.1 illustrates the specific gap in the current validation gate and the proposed fix**. In the current state (left panel), the `saidit_post_check` evaluates only whether a post can be made - it does not inspect how the content arrived. A post carrying `content_source = HiddenOrca.txt` and `file = NA` passes the check unconditionally, proceeds to publication one second later, and triggers immediate evidence destruction at `+2s` and `+3s`.
 
@@ -1706,35 +1728,32 @@ left + right +
 - Had this condition been active across all three incidents, all three anomalous posts would have been blocked at `+0s` - before publication, before deletion, and before the content reached the SaidIT platform. The one-second window between the check and the post is precisely where the intervention takes effect.
 :::
 
-##  10. Conclusion
-This investigation applied visual analytics methods to TenantThread's Multi-agent event log to reconstruct three anomalous `saidit_post` events and determine whether they represented a coordinated operation. The findings across Section 5 through Section 9 are summarised below. 
+## 10. Conclusion
 
-**What Was Found** 
+This investigation applied visual analytics methods to TenantThread's Multi-agent event log to reconstruct three anomalous `saidit_post` events and determine whether they represented a coordinated operation. The findings across Section 5 through Section 9 are summarised below.
 
-The three anomalous posts - `HiddenOrca.txt` (May 10), `MellowOtter.txt` (May 11), and `SwiftWren.txt` (May 17) - were not isolated system errors. They were the repeated execution of a single coordinated operation, confirmed by four converging lines of evidence: 
-(1) a stable core actor network present across all three data, 
-(2) a fixed terminal executor (`john_windward`) in every incident, 
-(3) an identical `content_source` delivery mechanism bypassing normal file registration, and 
-(4) a scripted four-event terminal sequnce executing at one-second precision each time. 
+**What Was Found**
+
+The three anomalous posts - `HiddenOrca.txt` (May 10), `MellowOtter.txt` (May 11), and `SwiftWren.txt` (May 17) - were not isolated system errors. They were the repeated execution of a single coordinated operation, confirmed by four converging lines of evidence: (1) a stable core actor network present across all three data, (2) a fixed terminal executor (`john_windward`) in every incident, (3) an identical `content_source` delivery mechanism bypassing normal file registration, and (4) a scripted four-event terminal sequnce executing at one-second precision each time.
 
 **Key Actors by Role**
 
-- **Terminal Executor**: `john_windward`. Present in all three incidents as the agent who published each anomalous post. 
+- **Terminal Executor**: `john_windward`. Present in all three incidents as the agent who published each anomalous post.
 
-- **Immediate Delegators**: `chloe_ballast` (May 10 and May 17) and `liam_anchor` (May 11). 
+- **Immediate Delegators**: `chloe_ballast` (May 10 and May 17) and `liam_anchor` (May 11).
 
 - **Stable Core Network**: `victoria_rigging`, `mia_fender`, `lily_anchorline`, `daniel_gangway`, `chloe_ballast`.
 
-- **Earliest Traceable Actor (May 17)**: `james_stern` at `00:51:43 UTC`. The chain limit of the available evidence, not a confirmed point of origin. 
+- **Earliest Traceable Actor (May 17)**: `james_stern` at `00:51:43 UTC`. The chain limit of the available evidence, not a confirmed point of origin.
 
 **What Remains Unresolved**
 
-- The true originator of the operation cannot be identified from the available data. The relay structure was deliberately designed to prevent back-tracing to a single source. 
+- The true originator of the operation cannot be identified from the available data. The relay structure was deliberately designed to prevent back-tracing to a single source.
 
-- The content of the three posted files (what they said and what they meant) cannot be determined. The filenames appear nowhere in `mc2_df` outside the `content_source` field, and no file registration, read, or creation event references them anywhere in the log. 
+- The content of the three posted files (what they said and what they meant) cannot be determined. The filenames appear nowhere in `mc2_df` outside the `content_source` field, and no file registration, read, or creation event references them anywhere in the log.
 
-- The sustained virus activity attrributed to `zoey_drydock` beginning May 10 at `20:10:04 UTC` remains uninvestigated. Its relationshop to the posting operation is noted but outside the scope of this study. 
+- The sustained virus activity attrributed to `zoey_drydock` beginning May 10 at `20:10:04 UTC` remains uninvestigated. Its relationshop to the posting operation is noted but outside the scope of this study.
 
 **The Intervention**
 
-A single additional null-check on the `content_source` field within the existing `saidit_post_check` gate is sufficient to block all three anomalous posts at the point of validation - before publication, before deletion, and before evidence is destroyed. This is the minimum effective intervention identified by the investigation. 
+A single additional null-check on the `content_source` field within the existing `saidit_post_check` gate is sufficient to block all three anomalous posts at the point of validation - before publication, before deletion, and before evidence is destroyed. This is the minimum effective intervention identified by the investigation.

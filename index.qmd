@@ -1,7 +1,16 @@
 ---
 title: "Hi, i am Albert Chia!"
+format:
+  html:
+    page-layout: full
 ---
-
+```{=html}
+<style>
+  p {
+    text-align: justify;
+  }
+</style>
+```
 ::: hero-box
 ## Welcome to my Visual Analytics Journey!
 
@@ -12,7 +21,17 @@ It includes my hands-on exercises, in-class exercises, and future take-home exer
 
 ## Latest Hands-on_Exercises
 
-:::::::::::::::: grid
+:::::::::::::::::: grid
+<a href="Hands-on_Exercise/Hands-on_Ex08/Hands-on_Ex08.html" class="card-link">
+
+::: {.g-col-4 .work-card}
+### Hands-on Exercise 8
+
+Visualising and Analysing Time-oriented Data
+:::
+
+</a>
+
 <a href="Hands-on_Exercise/Hands-on_Ex07/Hands-on_Ex07b.html" class="card-link">
 
 ::: {.g-col-4 .work-card}
@@ -162,4 +181,4 @@ A Layered Grammar of Graphics: ggplot2 methods
 :::
 
 </a>
-::::::::::::::::
+::::::::::::::::::
