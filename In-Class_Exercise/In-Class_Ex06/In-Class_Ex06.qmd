@@ -1,0 +1,13 @@
+---
+title: "In-Class Exercise_06"
+author: "Albert Chia"
+execute:
+  eval: true
+  echo: true
+  warning: false
+  freeze: true
+---
+
+![](images/Shiny_App.png)
+
+[Shiny App](https://albertchia.shinyapps.io/Shiny/)

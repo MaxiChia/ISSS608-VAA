@@ -1,0 +1,15 @@
+---
+title: "In-Class Exercise 08"
+author: "Albert Chia"
+execute:
+  eval: true
+  echo: true
+  warning: false
+  freeze: true
+---
+
+![](images/In-Class_Ex08.JPG)
+
+[In-Class_Ex08a](https://public.tableau.com/app/profile/albert.chia/viz/In-Class_Ex08_17813365602750/Dashboard1?publish=yes)
+
+[In-Class_Ex08b](https://public.tableau.com/app/profile/albert.chia/viz/Book2_17813364927320/Dashboard1?publish=yes)

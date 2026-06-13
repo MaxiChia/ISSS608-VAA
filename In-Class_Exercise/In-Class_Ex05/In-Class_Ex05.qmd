@@ -1,0 +1,13 @@
+---
+title: "In-Class Exercise_05"
+author: "Albert Chia"
+execute:
+  eval: true
+  echo: true
+  warning: false
+  freeze: true
+---
+
+![](images/TreeMap_of_Number_of_Units_Sold.png)
+
+[In-Class_Ex05 \| Tableau Public](https://public.tableau.com/app/profile/albert.chia/viz/In-Class_Ex05_17789168043740/TreemapofNumberofUnitsSold)
