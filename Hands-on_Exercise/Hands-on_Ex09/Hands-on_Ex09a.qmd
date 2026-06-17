@@ -12,6 +12,13 @@ format:
   html:
     page-layout: full
 ---
+```{=html}
+<style>
+  p {
+    text-align: justify;
+  }
+</style>
+```
 # Choropleth Mapping with R
 
 ##  1.  Overview
