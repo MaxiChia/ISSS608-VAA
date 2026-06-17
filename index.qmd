@@ -22,9 +22,38 @@ It includes my hands-on exercises, in-class exercises, and future take-home exer
 ## Latest Hands-on_Exercises
 
 :::::::::::::::::: grid
-<a href="Hands-on_Exercise/Hands-on_Ex08/Hands-on_Ex08.html" class="card-link">
+<a href="Hands-on_Exercise/Hands-on_Ex09/Hands-on_Ex09c.html" class="card-link">
 
 ::: {.g-col-4 .work-card}
+### Hands-on Exercise 9c
+
+Analytical Mapping
+:::
+
+</a>
+
+<a href="Hands-on_Exercise/Hands-on_Ex09/Hands-on_Ex09b.html" class="card-link">
+
+::: {.g-col-4 .work-card}
+### Hands-on Exercise 9b
+
+Visualising Geospatial Point Data
+:::
+
+</a>
+
+<a href="Hands-on_Exercise/Hands-on_Ex09/Hands-on_Ex09a.html" class="card-link">
+
+::: {.g-col-4 .work-card}
+### Hands-on Exercise 9a
+
+Choropleth Mapping in R
+:::
+
+</a>
+
+<a href="Hands-on_Exercise/Hands-on_Ex08/Hands-on_Ex08.html" class="card-link">
+
 ### Hands-on Exercise 8
 
 Visualising and Analysing Time-oriented Data
