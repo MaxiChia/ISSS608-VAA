@@ -11,6 +11,7 @@ execute:
 format:
   html:
     page-layout: full
+    html-table-processing: none
 ---
 ```{=html}
 <style>
@@ -242,31 +243,17 @@ report %>%
 ```{r}
 #| code-fold: true
 #| warning: false
-
-#| code-fold: true
-#| fig-width: 10
-#| fig-height: 8
-#| warning: false
+#| dev: "png"
 
 report %>%
   group_by(Product) %>%
-  summarize(
-    `Monthly Sales` = list(Sales),
-    .groups = "drop"
-  ) %>%
+  summarize('Monthly Sales' = list(Sales), .groups = "drop") %>%
   gt() %>%
-  gt_plt_sparkline(
-    column = `Monthly Sales`,
-    same_limit = FALSE,
-    label = TRUE,
-    palette = c(
-      "black",      # line colour
-      "black",      # final value label colour
-      "#8E44AD",    # minimum point colour
-      "#66FF33",    # maximum point colour
-      "transparent" # background / fill
-    )
-  )
+  gt_plt_sparkline('Monthly Sales', 
+                   same_limit = FALSE,
+                   fig_dim = c(5, 30),
+                   palette = c("black", "black", "#8E44AD", "#66FF33", "white"),
+                   type = "default")
 ```
 
 ### 6.2 Adding statistics
@@ -322,6 +309,7 @@ sales_data = left_join(sales, spark)
 #| fig-width: 10
 #| fig-height: 6
 #| warning: false
+#| dev: "png"
 
 sales_data %>%
   gt() %>%
@@ -353,6 +341,7 @@ sales_data = sales_data %>%
 #| fig-width: 10
 #| fig-height: 6
 #| warning: false
+#| dev: "png"
 
 sales_data %>%
   gt() %>%
@@ -365,7 +354,7 @@ sales_data %>%
   gt_theme_538()
 ```
 
-##  7.  Interactive Information Dashboard Design: reactable and reactablefmtr methods
+##  7.  Interactive Information Dashboard Design: `reactable` and `reactablefmtr` methods
 
 In this section, we will learn how to create interactive information dashboard by using [reactable](https://glin.github.io/reactable/index.html) and [reactablefmtr](https://kcuilla.github.io/reactablefmtr/index.html) packages. Before getting started, it is highly recommended for us to visit the webpage of these two packages and review all the materials provided on the webpages at least once. we do not have to understand and remember everything provided but at least have and overview of the purposes and functions provided by them.
 
