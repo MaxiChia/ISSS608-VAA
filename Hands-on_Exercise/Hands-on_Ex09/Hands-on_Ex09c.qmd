@@ -1,5 +1,5 @@
 ---
-title: "Hands-on_Ex09c"
+title: "Hands-On_Exercise 09c"
 author: "Albert Chia"
 date: "Jun 17, 2026"
 date-modified: "last-modified"
@@ -7,7 +7,7 @@ execute:
   eval: true
   echo: true
   warning: false
-  freeze: false
+  freeze: true
 format:
   html:
     page-layout: full

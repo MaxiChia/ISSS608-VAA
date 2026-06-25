@@ -1,5 +1,5 @@
 ---
-title: "Hands-On Exercise 8"
+title: "Hands-On_Exercise 8"
 author: "Albert Chia"
 date: "Jun 11, 2026"
 date-modified: "last-modified"
@@ -12,42 +12,49 @@ format:
   html:
     page-layout: full
 ---
+
 # Visualising and Analysing Time-Oriented Data
 
-##  1.  Overview
-In this Hands-On Exercise, we will learn to create the following data visualisation by using R packages: 
+## 1. Overview
+
+In this Hands-On Exercise, we will learn to create the following data visualisation by using R packages:
 
 - Plotting a calendar heatmap by using ggplot2 function
 - Plotting a cycle plot by using ggplot 2 function
 - Plotting a slopegraph
 - Plotting a horizon chart
 
-##  2.  Getting Started
+## 2. Getting Started
 
 ### 2.1 Installing and Launching R Packages
-In this exercise, we will install and launch the following R packages: scales, viridis, lubridate, ggthemes, gridExtra, readxl, knitr, data.table, CPGfunctions, ggHoriPlot, and tidyverse. 
+
+In this exercise, we will install and launch the following R packages: scales, viridis, lubridate, ggthemes, gridExtra, readxl, knitr, data.table, CPGfunctions, ggHoriPlot, and tidyverse.
+
 ```{r}
 #| code-fold: true
 pacman::p_load(scales, viridis, lubridate, ggthemes, gridExtra, readxl, knitr, data.table, CGPfunctions, ggHoriPlot, tidyverse)
 ```
 
-##  3.  Plotting Calendar Heatmap
-In this section, we will learn how to plot a calendar heatmap programmatically using ggplot2 package - like the image below: 
+## 3. Plotting Calendar Heatmap
+
+In this section, we will learn how to plot a calendar heatmap programmatically using ggplot2 package - like the image below:
 
 ![](data/Calendar_Heatmap.png)
 
-By the end of this section, we will be able to: 
+By the end of this section, we will be able to:
 
 - Plot a calendar heatmap by using ggplot2 functions and extension
 - Write function using R programming
 - Derive specific date and time related field by using base R and lubridate packages
 - Perform data preparation task using tidyr and dplyr packages
 
-###  3.1  The Data
-This Hands-on Exercise, we will use the *eventlog.csv* file. This data file consists of 199,999 rows of time-series cyber attack records by country. 
+### 3.1 The Data
+
+This Hands-on Exercise, we will use the *eventlog.csv* file. This data file consists of 199,999 rows of time-series cyber attack records by country.
 
 ### 3.2 Importing the Data
-First, we will use the code chunk below to import *eventlog.csv* file into R environment and called the data frame as *attacks*. 
+
+First, we will use the code chunk below to import *eventlog.csv* file into R environment and called the data frame as *attacks*.
 
 ```{r}
 #| code-fold: true
@@ -55,24 +62,25 @@ attacks <- read_csv("data/eventlog.csv")
 ```
 
 ### 3.3 Examining the Data Structure
-It is always a good practice to examine the imported data frame before further analysis is performed. FOr example, *kable()* can be used to review the structure of the imported data frame. 
+
+It is always a good practice to examine the imported data frame before further analysis is performed. FOr example, *kable()* can be used to review the structure of the imported data frame.
 
 ```{r}
 #| code-fold: true
 kable(head(attacks))
 ```
 
-There are three columns, namely *timestamp*, *source_country* and *tz*. 
+There are three columns, namely *timestamp*, *source_country* and *tz*.
 
-- *timestamp* field stores date-time values in POSIXct format. 
-- *source_country* field stores the source of the attack. it is in *ISO 3166-1 alpha-2* country code. 
-- *tz* field stores time zone of the source IP address. 
+- *timestamp* field stores date-time values in POSIXct format.
+- *source_country* field stores the source of the attack. it is in *ISO 3166-1 alpha-2* country code.
+- *tz* field stores time zone of the source IP address.
 
 ### 3.4 Data Preparation
 
 **Step 1: Deriving *weekday* and *hour of day* fields**
 
-Before we can plot the calendar heatmap, two new fields, namely *wkday* and *hour* need to be derived. In this step, we will write a function to perform the task. 
+Before we can plot the calendar heatmap, two new fields, namely *wkday* and *hour* need to be derived. In this step, we will write a function to perform the task.
 
 ```{r}
 #| code-fold: true
@@ -89,8 +97,9 @@ make_hr_wkday <- function(ts, sc, tz) {
 
 ::: callout-note
 ## Note
-- [ymd_hms()](https://lubridate.tidyverse.org/reference/ymd_hms.html) and [hour()](https://lubridate.tidyverse.org/reference/hour.html) are from [**lubridate**](https://lubridate.tidyverse.org/) package, and 
-- [weekdays()](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/weekdays) is a **base** R function. 
+
+- [ymd_hms()](https://lubridate.tidyverse.org/reference/ymd_hms.html) and [hour()](https://lubridate.tidyverse.org/reference/hour.html) are from [**lubridate**](https://lubridate.tidyverse.org/) package, and
+- [weekdays()](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/weekdays) is a **base** R function.
 :::
 
 **Step 2: Deriving the attacks tibble data frame**
@@ -116,17 +125,21 @@ attacks <- attacks %>%
 
 ::: callout-note
 ## Note
-Beside extracting the necessary data into *attacks* data frame, `mutate()` of **dplyr** package is used to convert *wkday* and *hour* fields into **factor** so they will be ordered when plotting. 
+
+Beside extracting the necessary data into *attacks* data frame, `mutate()` of **dplyr** package is used to convert *wkday* and *hour* fields into **factor** so they will be ordered when plotting.
 :::
 
-Table below shows the tidy tibble table after processing. 
+Table below shows the tidy tibble table after processing.
+
 ```{r}
 #| code-fold: true
 kable(head(attacks))
 ```
 
 ### 3.5 Building the Calendar Heatmaps
+
 Now we can start build the Calendar Heatmap
+
 ```{r}
 #| label: Calendar_Heatmap
 #| code-fold: true
@@ -158,27 +171,30 @@ theme(axis.ticks = element_blank(),
       legend.title = element_text(size = 8),
       legend.text = element_text(size = 6) )
 ```
+
 ::: callout-note
 ## Things to learn from the code chunk above
+
 - a tibble data table called *grouped* is derived by aggregating the attack by *wkday* and *hour* fields
 - a new field called *n* is derived by using `group_by()` and `count()` functions
 - `na.omit()` is used to exclude missing value
 - `geom_tile()` is used to plot tiles (grids) at each x and y position. `color` and `size` arguments are used to specify the border colour and line size of the tiles
-- [`theme_tufte()`](https://jrnold.github.io/ggthemes/reference/theme_tufte.html) of [ggthemes](https://jrnold.github.io/ggthemes/reference/index.html) package is used to remove unnecessary chart junk. To learn which visual components of default ggplot2 have been excluded, we are encouraged to comment out this line to examine the default plot. 
+- [`theme_tufte()`](https://jrnold.github.io/ggthemes/reference/theme_tufte.html) of [ggthemes](https://jrnold.github.io/ggthemes/reference/index.html) package is used to remove unnecessary chart junk. To learn which visual components of default ggplot2 have been excluded, we are encouraged to comment out this line to examine the default plot.
 - `coord_equal()` is used to ensure the plot will have an aspect ration of 1:1.
-- `scale_fill_gradient()` function is used to create a two colour gradient (low-high). 
+- `scale_fill_gradient()` function is used to create a two colour gradient (low-high).
 :::
 
-Then, we can simply group the count by hour and wkday and plot it, since we know that we have values for every combination there is no need to further pre-process the data. 
+Then, we can simply group the count by hour and wkday and plot it, since we know that we have values for every combination there is no need to further pre-process the data.
 
 ### 3.6 Building Multiple Calendar Heatmaps
-**Challenge**: Building multiple heatmaps for the top four countries with the highest number of attacks. 
+
+**Challenge**: Building multiple heatmaps for the top four countries with the highest number of attacks.
 
 ### 3.7 Preparping the Data for Multiple Calendar Heatmaps
 
 **Step 1: Deriving attack by country object**
 
-In order to identify the top four countries with the highest number of attacks, we are required to do the followings: 
+In order to identify the top four countries with the highest number of attacks, we are required to do the followings:
 
 - count the number of attacks by country
 - calculate the percent of attacks by country
@@ -210,7 +226,7 @@ top4_attacks <- attacks %>%
 
 ### 3.8 Plotting the Multiple Calendar Heatmaps
 
-**Step 3: Plotting the Multiple Calendar Heatmap by using ggplot2 package** 
+**Step 3: Plotting the Multiple Calendar Heatmap by using ggplot2 package**
 
 ```{r}
 #| label: Multiple_Calendar_Heatmap
@@ -239,13 +255,15 @@ ggplot(top4_attacks,
         legend.text = element_text(size = 6) )
 ```
 
-##  4.  Plotting Cycle Plot
-In this section, we will learn how to plot a cycle plot showing the time-series patterns and trend of visitor arrivals from Vietnam programmatically by using ggplot2 functions. 
+## 4. Plotting Cycle Plot
+
+In this section, we will learn how to plot a cycle plot showing the time-series patterns and trend of visitor arrivals from Vietnam programmatically by using ggplot2 functions.
 
 ![](data/cycle_plot.png)
 
 ### 4.1 Step 1: Data Import
-For the purpose of this hands-on exercise, *arrivals_by_air.xlsx* will be used. 
+
+For the purpose of this hands-on exercise, *arrivals_by_air.xlsx* will be used.
 
 The code chunk below imports *arrivals_by_air.xlsx* by using `read_excel()` of **readxl** package and save it as a tibble data frame called *air*.
 
@@ -255,7 +273,8 @@ air <- read_excel("data/arrivals_by_air.xlsx")
 ```
 
 ### 4.2 Step 2: Deriving month and year fields
-Next, two new fields called *month* and *year* are derived from *month-year* field. 
+
+Next, two new fields called *month* and *year* are derived from *month-year* field.
 
 ```{r}
 #| code-fold: true
@@ -267,6 +286,7 @@ air$year <- year(ymd(air$`Month-Year`))
 ```
 
 ### 4.3 Step 3: Extracting the target country
+
 Next, the code chunk below is use to extract data for the target country (i.e. Vietnam).
 
 ```{r}
@@ -279,7 +299,8 @@ Vietnam <- air %>%
 ```
 
 ### 4.4 Step 4: Computing year average arrivals by month
-The code chunk below uses `group_by()` and `summarise()` of **dplyr** to compute year average arrivals by month. 
+
+The code chunk below uses `group_by()` and `summarise()` of **dplyr** to compute year average arrivals by month.
 
 ```{r}
 #| code-fold: true
@@ -289,7 +310,8 @@ hline.data <- Vietnam %>%
 ```
 
 ### 4.5 Step 5: Plotting the cycle plot
-The code chunk below is used to plot the cycle plot. 
+
+The code chunk below is used to plot the cycle plot.
 
 ```{r}
 #| label: cycle_plot
@@ -323,20 +345,24 @@ ggplot() +
   )
 ```
 
-##  5.  Plotting Slopegraph
-In this section, we will learn how to plot a [slopegraph](*https://www.storytellingwithdata.com/blog/2020/7/27/what-is-a-slopegraph) by using R. 
+## 5. Plotting Slopegraph
 
-Before getting started, we need to make sure that CGPfunctions has been installed and loaded onto R environment. Then, refer to [Using newggslopegraph](https://ibecav.github.io/CGPfunctions/articles/Using-newggslopegraph.html) to learn more about the function. Lastly, read more about `newggslopegraph()` and its arguments by referring to this [link](https://www.rdocumentation.org/packages/CGPfunctions/versions/0.6.3/topics/newggslopegraph).  
+In this section, we will learn how to plot a [slopegraph](*https://www.storytellingwithdata.com/blog/2020/7/27/what-is-a-slopegraph) by using R.
+
+Before getting started, we need to make sure that CGPfunctions has been installed and loaded onto R environment. Then, refer to [Using newggslopegraph](https://ibecav.github.io/CGPfunctions/articles/Using-newggslopegraph.html) to learn more about the function. Lastly, read more about `newggslopegraph()` and its arguments by referring to this [link](https://www.rdocumentation.org/packages/CGPfunctions/versions/0.6.3/topics/newggslopegraph).
 
 ### 5.1 Step 1: Data Import
-Impore the rice data set into R environment by using the code chunk below: 
+
+Impore the rice data set into R environment by using the code chunk below:
+
 ```{r}
 #| code-fold: true
 rice <- read_csv("data/rice.csv")
 ```
 
 ### 5.2 Step 2: Plotting the slopegraph
-Next, the code chunk below will be used to plot a basic slopegraph as shown. 
+
+Next, the code chunk below will be used to plot a basic slopegraph as shown.
 
 ```{r}
 #| label: basic_slopegraph
@@ -353,5 +379,6 @@ rice %>%
 
 ::: callout-note
 ## Things to learn from the code chunk above
-For effective data visualisation design, `factor()` is used to convert the value type of *year* field from numeric to factor. 
+
+For effective data visualisation design, `factor()` is used to convert the value type of *year* field from numeric to factor.
 :::
